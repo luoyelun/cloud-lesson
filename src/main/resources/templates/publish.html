@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>发布</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/editormd.min.js}"></script>
+    <script th:src="@{/js/publish.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/editormd.min.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-container uk-container-large uk-margin-small-top publish-main">
+    <div class="uk-margin">
+        <input class="uk-input uk-form-width-large publish-title" type="text" id="title" name="title" placeholder="标题">
+        <span id="mark" hidden="hidden"></span>
+        <input type="text" id="video-link" hidden="hidden" value="">
+    </div>
+    <div class="uk-margin">
+        <button class="uk-button uk-button-default uk-margin-small-right" type="button"
+                uk-toggle="target: #modal-example">选择标签
+        </button>
+
+        <label for="tags">
+            <input class="uk-input uk-form-width-large" type="text" id="tags" name="tags" placeholder="选择标签"
+                   disabled="disabled"></label>
+        <div id="modal-example" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">选择标签</h2>
+                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="Java">Java</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="Python">Python</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="Cpp">C/C++</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="JavaScript">Javascript</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="web开发">web开发</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="安卓">安卓</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="IOS">IOS</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="linux">Linux</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="工具">工具利器</label>
+                    <label><input class="uk-checkbox" name="tag" type="checkbox" value="安全技术">安全技术</label>
+                </div>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button">取消
+                    </button>
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button" onclick="setTag()">确定
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="uk-margin uk-align-center" id="post-content">
+        <label for="content"></label>
+        <textarea rows="15" class="form-control" name="content"
+                  id="content" style="display:none;" required></textarea>
+    </div>
+    <form name="theform" hidden="hidden">
+        <input type="radio" name="myradio" value="local_name" hidden="hidden">
+        <input type="radio" name="myradio" value="random_name" checked="true" hidden="hidden"/>
+        <br/>
+        <input type="text" id='dirname' placeholder="如果不填，默认是上传到根目录" size=50 hidden="hidden">
+    </form>
+    <div class="uk-margin" id="container">
+        <button class="uk-button uk-button-default" id="selectfiles" href="javascript:void(0);"
+                sec:authorize="hasRole('ROLE_AUTHOR')">选择视频上传
+        </button>
+        <button class="uk-button uk-button-default" id="postfiles" href="javascript:void(0);" style="display: none"
+                sec:authorize="hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">开始上传
+        </button>
+        <span id="ossfile" style="display: none"></span>
+        <button class="uk-button uk-button-primary uk-align-right" onclick="publish()">发布主题</button>
+        <span id="publish-message" class="uk-align-right uk-text-primary"></span>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        editormd("post-content", {
+            width: "100%",
+            height: 500,
+            path: "/yunke/js/lib/",
+            delay: 0,
+            watch: false,
+            placeholder: "撰写内容...支持markdown",
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/community/file/upload",
+        });
+    });
+</script>
+
+<script type="text/javascript" th:src="@{/js/lib/crypto1/crypto/crypto.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/crypto1/hmac/hmac.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/crypto1/sha1/sha1.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/base64.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/plupload-2.1.2/js/plupload.full.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/upload.js}"></script>
+</body>
+
+</html>

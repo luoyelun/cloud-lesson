@@ -1,0 +1,56 @@
+.nav-ico {
+    width: 50px;
+}
+
+.nav-border {
+    border-bottom: 1px solid #f0f2f7;
+}
+
+.login-header {
+    margin: 20px auto;
+    width: 500px;
+    text-align: center;
+}
+
+.login-header a {
+    font-size: 40px;
+    text-decoration: none;
+    color: #c9cfd8;
+}
+
+.index-marin {
+    margin-top: 20px;
+}
+
+.index-main-left {
+    width: 15%;
+}
+
+.index-main-right {
+    width: 50%;
+}
+
+.index-classify a {
+    color: #667c99;;
+}
+
+.index-classify a img {
+    width: 20px;
+}
+
+.index-post-list * {
+    padding: 0;
+}
+
+.publish-main {
+    width: 90%;
+}
+
+.publish-title {
+    width: 633px;
+}
+
+.index-p :hover {
+    border-radius: 5px;
+    background: #f3f6f9;
+}

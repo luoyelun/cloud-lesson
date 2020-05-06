@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录注册</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/loginregister.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+
+</head>
+<body class="uk-background-default">
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-align-center login-header uk-margin-large-top" >
+    <a class="uk-text-emphasis" th:href="@{/}">云课</a>
+</div>
+<div>
+    <div class="uk-align-center" style="width: 500px;height: 500px">
+        <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+            <li><a href="#" id="login">登录</a></li>
+            <li><a href="#" id="register">注册</a></li>
+
+        </ul>
+        <!--登录-->
+        <ul class="uk-switcher uk-margin">
+            <li>
+                <form th:action="@{/login/form}" method="post">
+                    <div class="uk-margin">
+                        <label for="username"></label>
+                        <input class="uk-input" id="username" name="username" type="text"
+                               placeholder="账户名">
+                    </div>
+                    <div class="uk-margin">
+                        <label for="password"></label>
+                        <input class="uk-input" id="password" name="password"
+                               type="password" placeholder="密码">
+                    </div>
+
+                    <div class="uk-margin">
+                        <label>
+                            <input class="uk-checkbox" type="checkbox" id="rememberMe" name="rememberMe">
+                            记住我
+                        </label>
+                    </div>
+                    <span id="login-message" class="uk-text-primary" th:text="${msg}"></span>
+                    <div class="uk-margin">
+                        <button class="uk-button uk-button-primary uk-align-center" type="submit">登录
+                        </button>
+                    </div>
+                </form>
+            </li>
+            <!--            注册-->
+            <li>
+                <div class="uk-margin">
+                    <input class="uk-input" id="register-username" name="username" type="text" placeholder="邮箱"
+                           autocomplete="off"
+                           maxlength="20">
+                </div>
+                <div class="uk-margin">
+                    <input class="uk-input" id="register-password" name="password" type="password" placeholder="密码"
+                           maxlength="20"
+                           minlength="6">
+                </div>
+                <div class="uk-margin">
+                    <input class="uk-input" id="name" name="name" type="text" placeholder="昵称" autocomplete="off"
+                           maxlength="20">
+                </div>
+                <div class="uk-margin">
+                    <input class="uk-input" id="qq" name="qq" type="text" placeholder="QQ(非必填)" autocomplete="off"
+                           maxlength="20" minlength="5">
+                </div>
+                <div class="uk-margin">
+                    <input class="uk-input" id="wechat" name="wechat" type="text" placeholder="微信(非必填)"
+                           autocomplete="off"
+                           maxlength="30" minlength="4">
+                </div>
+                <div class="uk-margin">
+                    <input class="uk-input" id="captcha" name="captcha" type="text" placeholder="验证码"
+                           autocomplete="off">
+                </div>
+                <span id="message" class="uk-text-primary"></span>
+                <div class="uk-margin">
+                    <button class="uk-button uk-button-primary uk-align-center" onclick="sendMail()">发送验证码
+                    </button>
+                    <button class="uk-button uk-button-primary uk-align-center" onclick="registera()">注册
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

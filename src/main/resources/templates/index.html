@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>云课</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-flex uk-flex-center uk-margin-medium-top">
+    <div class="index-main-left">
+        <ul class="uk-list uk-link-text index-classify">
+            <li class="index-classify">
+                <a th:href="@{/}">
+                    <img class="uk-margin-small-right" th:src="@{/icon/all.png}" alt="">
+                    全部主题
+                </a>
+            </li>
+        </ul>
+        <div class="uk-divider-small"></div>
+        <ul class="uk-list uk-link-text index-classify">
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/java.png}" alt="">
+                    Java
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/c.png}" alt="">
+                    C/C++
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/HTML.png}" alt="">
+                    HTML
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/python.png}" alt="">
+                    Python
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/JavaScript.png}" alt="">
+                    Javascript
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/web-design-q.png}" alt="">
+                    前端开发
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/web-design-h.png}" alt="">
+                    后端开发
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/android.png}" alt="">
+                    Android
+                </a>
+            </li>
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/ios.png}" alt="">
+                    IOS
+                </a>
+            </li>
+
+            <li class="uk-margin-bottom">
+                <a href="">
+                    <img class="uk-margin-small-right" th:src="@{/icon/windows.png}" alt="">
+                    Windows
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="index-main-right">
+        <div class="uk-button-group">
+            <button class="uk-button uk-button-default uk-button-small">最新主题</button>
+            <div class="uk-inline">
+                <button class="uk-button uk-button-default uk-button-small" type="button"><span
+                        uk-icon="icon:  triangle-down"></span>
+                </button>
+                <div uk-dropdown="mode: click; boundary: ! .uk-button-group; boundary-align: true;"
+                     style="min-width:139px;">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li class="uk-nav-header"><a href="">最近回复</a></li>
+                        <li class="uk-nav-header"><a href="">最多回复</a></li>
+                        <li class="uk-nav-header"><a href="">最多点击</a></li>
+                        <li class="uk-nav-header"><a href="">最新主题</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="uk-list">
+            <input type="text" th:value="${postList.get(0).pageMaxNum}" hidden="hidden">
+            <input type="text" th:value="${postList.get(0).presentPageNum}" hidden="hidden">
+            <li class="index-post-list index-p" th:each="post:${postList}">
+                <article class="uk-comment">
+                    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                        <div class="uk-width-auto">
+                            <a href="#">
+                                <img class="uk-comment-avatar" th:src="${post.getAuthorAvatar()}"
+                                     width="60" height="60" alt="">
+                            </a>
+                        </div>
+                        <div class="uk-width-expand">
+                            <div class="uk-comment-title uk-margin-remove">
+                                <a href="#" class="uk-link-heading" th:text="${post.title}">
+
+                                </a>
+                                <span class="uk-align-right">
+                                        <img src="http://q9p1v1fsb.bkt.clouddn.com/tags.png" alt="" width="15">
+                                    <span th:text="${post.tags}" class="uk-text-small uk-text-muted"></span>
+                                </span>
+                            </div>
+                            <ul class="uk-comment-meta uk-subnav uk-margin-remove-top" style="padding-left: 0">
+                                <li th:text="${post.info}"></li>
+                                <li class="uk-align-right">
+                                        <span>
+                                            <img src="http://q9p1v1fsb.bkt.clouddn.com/connent.png" alt="" width="20">[[${post.replyCount}]]
+                                            <img src="http://q9p1v1fsb.bkt.clouddn.com/view.png" alt="" width="20">[[${post.viewCount}]]
+                                        </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+                </article>
+
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

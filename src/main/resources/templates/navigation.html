@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title></title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+</head>
+<body>
+<nav class="uk-navbar-container nav-border uk-box-shadow-medium" uk-navbar th:fragment="nav">
+    <div class="uk-navbar-left uk-margin-large-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active">
+                <a th:href="@{/}">
+                    <img class="nav-ico" th:src="@{/favicon.ico}" alt="" src="">
+                </a>
+            </li>
+            <li><a th:href="@{/}">首页</a></li>
+            <li><a href="#">课程推荐</a></li>
+            <li><a href="#" sec:authorize="isAuthenticated()">我的关注</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="uk-navbar-right uk-margin-large-right">
+        <ul class="uk-navbar-nav">
+
+            <li>
+                <div class="uk-navbar-item">
+                    <form>
+                        <input class="uk-input uk-form-width-small uk-form-width-medium" type="text">
+                        <button class="uk-button uk-button-default">搜索</button>
+                    </form>
+                </div>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}">登录/注册</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="uk-text-emphasis uk-link-text" th:href="@{/admin/management}">管理</a>
+            </li>
+            <li sec:authorize="hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">
+                <a class="uk-text-emphasis uk-link-text" th:href="@{/publish}">发布主题</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="#">
+                    <img width="50px;" src="http://q9p1v1fsb.bkt.clouddn.com/avatar.png" alt="">
+                    <span class="uk-text-emphasis" sec:authentication="principal.name"></span>
+                    <span uk-icon="thumbnails"></span>
+                </a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li><a href="#" class="uk-link-text">个人信息</a></li>
+                        <li><a href="#" class="uk-link-text">我的关注</a></li>
+                        <li><a th:href="@{/logout}" class="uk-link-text">退出</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+</nav>
+</body>
+</html>

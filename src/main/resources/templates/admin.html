@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>云课</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-flex uk-flex-center uk-margin-large-top">
+    <div class="index-main-left">
+        <div>
+            <h4>云课管理</h4>
+            <ul class="uk-list uk-list-large uk-list-divider">
+                <li>课程管理</li>
+                <li>用户管理</li>
+            </ul>
+        </div>
+    </div>
+    <div class="index-main-right">Item 2</div>
+</div>
+
+</body>
+</html>
