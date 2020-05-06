@@ -47,9 +47,4 @@ public class PublishController {
         return publishService.insertPost(post, principal.getName());
     }
 
-    @ResponseBody
-    @GetMapping("/test")
-    public Object test(Principal principal) {
-        return principal.getName();
-    }
 }

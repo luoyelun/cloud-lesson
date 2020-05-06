@@ -54,3 +54,10 @@
     border-radius: 5px;
     background: #f3f6f9;
 }
+
+.index-post-title-span {
+    max-width: 20em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

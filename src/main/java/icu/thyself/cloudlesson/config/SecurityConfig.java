@@ -2,6 +2,7 @@ package icu.thyself.cloudlesson.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -33,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                //首页以及注册不限制
-                .antMatchers("/", "/*", "/register", "/register/**", "/test").permitAll()
+                //不做限制的请求
+                .antMatchers("/", "/index/**", "/register", "/register/**", "/test").permitAll()
                 .and()
                 //登录不限制
                 .formLogin().loginPage("/login").loginProcessingUrl("/login/form").failureUrl("/loginerror")
@@ -47,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/publish").hasAnyRole("USER", "AUTHOR", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/publish").hasAnyRole("USER", "AUTHOR", "ADMIN")
                 .anyRequest().authenticated();
         http.rememberMe().rememberMeParameter("rememberMe").userDetailsService(userDetailsService);
         //没有权限，跳转请求
