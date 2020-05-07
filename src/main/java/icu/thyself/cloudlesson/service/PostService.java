@@ -10,7 +10,6 @@ import java.util.List;
  */
 
 public interface PostService {
-    List<PostDTO> latestPostList(int pageNum);
 
     /**
      * pageNum:页数
@@ -19,5 +18,4 @@ public interface PostService {
      */
     List<PostDTO> getPostList(int pageNum, String tag, String keyWord, String orderBy);
 
-    List<PostDTO> mostReplyPostList(int pageNum);
 }

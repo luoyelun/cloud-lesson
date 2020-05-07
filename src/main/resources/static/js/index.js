@@ -26,24 +26,41 @@ function mostView() {
     more();
 }
 
+function tag(e) {
+    let tag = e.getAttribute("data-tag")
+    $("#tag").val(tag);
+    $("#pagenum").val(1);
+    $(document).attr("title", tag);
+    $("div[name='post']").remove()
+    more();
+}
+
 function more() {
     let option = $("#option").text();
-    let linkOption;
+    let link = "/yunke/index/";
     if (option === "最新主题") {
-        linkOption = "latest";
+        link += "latest";
+        // orderBy = "latest";
     }
     if (option === "最多回复") {
-        linkOption = "mostreply";
+        link += "mostreply";
+        // orderBy = "mostreply";
     }
     if (option === "最近回复") {
-        linkOption = "recent";
+        link += "recent";
+        // orderBy = "recent/";
     }
     if (option === "最多点击") {
-        linkOption = "mostview";
+        link += "mostview";
+        // orderBy = "mostview";
+    }
+    let tag = $("#tag").val();
+    if (tag != null && tag !== "") {
+        link += "/" + tag;
     }
     let pagenum = $("#pagenum").val();
     // let ps = $(".ps");
-    $.get("/yunke/index/" + linkOption + "/" + pagenum, function (data) {
+    $.get(link + "/" + pagenum, function (data) {
         postList = JSON.parse(data);
         $(postList).each(function (i, post) {
             //拼装html

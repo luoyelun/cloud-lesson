@@ -22,7 +22,9 @@ public class IndexController {
     @Autowired
     PostService postService;
 
-    //首页
+    /**
+     * 首页
+     */
     @GetMapping("/")
     public String index(Model model) {
         List<PostDTO> postDTOList = postService.getPostList(1, null, null, "create");
@@ -35,8 +37,8 @@ public class IndexController {
      */
     @ResponseBody
     @GetMapping("/index/latest/{pageNum}")
-    public String getLatestPostListByPageNum(@PathVariable(name = "pageNum") int pageNum) {
-        return JSON.toJSONString(postService.latestPostList(pageNum));
+    public String getLatestPostList(@PathVariable(name = "pageNum") int pageNum) {
+        return JSON.toJSONString(postService.getPostList(pageNum, null, null, "create"));
     }
 
     /**
@@ -44,7 +46,7 @@ public class IndexController {
      */
     @ResponseBody
     @GetMapping("/index/mostreply/{pageNum}")
-    public String getMostReplyPostListByPageNum(@PathVariable(name = "pageNum") int pageNum) {
+    public String getMostReplyPostList(@PathVariable(name = "pageNum") int pageNum) {
         return JSON.toJSONString(postService.getPostList(pageNum, null, null, "most_reply"));
     }
 
@@ -53,7 +55,7 @@ public class IndexController {
      */
     @ResponseBody
     @GetMapping("/index/mostview/{pageNum}")
-    public String getMostViewPostListByPageNum(@PathVariable(name = "pageNum") int pageNum) {
+    public String getMostViewPostList(@PathVariable(name = "pageNum") int pageNum) {
         return JSON.toJSONString(postService.getPostList(pageNum, null, null, "most_view"));
     }
 
@@ -62,13 +64,45 @@ public class IndexController {
      */
     @ResponseBody
     @GetMapping("/index/recent/{pageNum}")
-    public String getRecentPostListByPageNum(@PathVariable(name = "pageNum") int pageNum) {
+    public String getRecentPostList(@PathVariable(name = "pageNum", required = false) int pageNum) {
         return JSON.toJSONString(postService.getPostList(pageNum, null, null, "recent"));
     }
 
+    /**
+     * 最近回复，根据标签
+     */
     @ResponseBody
-    @GetMapping("/test")
-    public Object test() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/index/recent/{tag}/{pageNum}")
+    public String getRecentPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
+        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "recent"));
     }
+
+    /**
+     * 最多点击，根据标签
+     */
+    @ResponseBody
+    @GetMapping("/index/mostview/{tag}/{pageNum}")
+    public String getMostViewPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
+        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "most_view"));
+    }
+
+    /**
+     * 最多回复，根据标签
+     */
+    @ResponseBody
+    @GetMapping("/index/mostreply/{tag}/{pageNum}")
+    public String getMostReplyPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
+        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "most_reply"));
+    }
+
+    /**
+     * 最新主题，根据标签
+     */
+    @ResponseBody
+    @GetMapping("/index/latest/{tag}/{pageNum}")
+    public String getLatestPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
+        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "create"));
+    }
+
+
 }

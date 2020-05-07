@@ -30,66 +30,67 @@
         <div class="uk-divider-small"></div>
         <ul class="uk-list uk-link-text index-classify">
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="Java">
                     <img class="uk-margin-small-right" th:src="@{/icon/java.png}" alt="">
                     Java
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="Python">
                     <img class="uk-margin-small-right" th:src="@{/icon/python.png}" alt="">
                     Python
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="Cpp">
                     <img class="uk-margin-small-right" th:src="@{/icon/c.png}" alt="">
                     C/C++
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="Javascript">
                     <img class="uk-margin-small-right" th:src="@{/icon/JavaScript.png}" alt="">
                     Javascript
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="WEB开发">
                     <img class="uk-margin-small-right" th:src="@{/icon/web.png}" alt="">
                     WEB开发
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="Android">
                     <img class="uk-margin-small-right" th:src="@{/icon/android.png}" alt="">
                     Android
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="IOS">
                     <img class="uk-margin-small-right" th:src="@{/icon/ios.png}" alt="">
                     IOS
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="Linux">
                     <img class="uk-margin-small-right" th:src="@{/icon/linux.png}" alt="">
                     Linux
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="工具利器">
                     <img class="uk-margin-small-right" th:src="@{/icon/tool.png}" alt="">
                     工具利器
                 </a>
             </li>
             <li class="uk-margin-bottom">
-                <a href="">
+                <a onclick="tag(this)" data-tag="安全技术">
                     <img class="uk-margin-small-right" th:src="@{/icon/security.png}" alt="">
                     安全技术
                 </a>
             </li>
         </ul>
+        <input id="tag" type="text" hidden="hidden" value="">
     </div>
     <div class="index-main-right">
         <div class="uk-button-group">
@@ -116,12 +117,12 @@
                     <tbody>
                     <tr>
                         <td width="60" valign="top" align="center">
-                            <a th:href="@{'/u/'+${post.authorId}}"><img width="60" height="60"
-                                                                        th:src="${post.authorAvatar}" alt=""></a>
+                            <a th:href="@{'/u/'+${post.authorId}}">
+                                <img width="60" height="60" th:src="${post.authorAvatar}" alt=""></a>
                         </td>
                         <td width="10"></td>
                         <td width="auth" valign="middle">
-                            <a th:href="@{'/u/'+${post.id}}" class="uk-link-heading"> <span
+                            <a th:href="@{'/p/'+${post.id}}" class="uk-link-heading"> <span
                                     th:text="${post.title}"></span>
                             </a>
                             <div height="5px"></div>
@@ -144,8 +145,7 @@
                 </table>
             </div>
         </div>
-        <button id="more" class="uk-button uk-button-default uk-align-center"
-                th:if="${postList.get(0).presentPageNum<postList.get(0).pageMaxNum}" onclick="more()">查看更多
+        <button id="more" class="uk-button uk-button-default uk-align-center" onclick="more()">查看更多
         </button>
     </div>
 </div>
