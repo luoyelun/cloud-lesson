@@ -112,32 +112,32 @@
         </div>
         <input id="pagenum" type="text" th:value="${postList.get(0).presentPageNum+1}" hidden>
         <div id="ps-list">
-            <div name="post" th:each="post:${postList}" class="index-p uk-margin-top">
+            <div name="topic" th:each="topic:${postList}" class="index-p uk-margin-top">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tbody>
                     <tr>
                         <td width="60" valign="top" align="center">
-                            <a th:href="@{'/u/'+${post.authorId}}">
-                                <img width="60" height="60" th:src="${post.authorAvatar}" alt=""></a>
+                            <a th:href="@{'/u/'+${topic.authorId}}">
+                                <img width="60" height="60" th:src="${topic.authorAvatar}" alt=""></a>
                         </td>
                         <td width="10"></td>
                         <td width="auth" valign="middle">
-                            <a th:href="@{'/p/'+${post.id}}" class="uk-link-heading"> <span
-                                    th:text="${post.title}"></span>
+                            <a th:href="@{'/t/'+${topic.id}}" class="uk-link-heading"> <span
+                                    th:text="${topic.title}"></span>
                             </a>
                             <div height="5px"></div>
-                            <span class="index-post-title-span uk-text-small uk-text-muted uk-align-right"
+                            <span class="index-topic-title-span uk-text-small uk-text-muted uk-align-right"
                                   style="margin-bottom: 0">
                             <img src="http://q9p1v1fsb.bkt.clouddn.com/tags.png" alt=""
                                  width="15">
-                            <span th:text="${post.tags}"></span>
+                            <span th:text="${topic.tags}"></span>
                         </span>
                             <span class="uk-text-small uk-text-muted">
-                            <span th:text="${post.info}"></span>
+                            <span th:text="${topic.info}"></span>
                             <img src="http://q9p1v1fsb.bkt.clouddn.com/view.png" alt="" width="15">
-                            <span th:text="${post.viewCount}"></span>
+                            <span th:text="${topic.viewCount}"></span>
                             <img src="http://q9p1v1fsb.bkt.clouddn.com/connent.png" alt="" width="15">
-                            <span th:text="${post.replyCount}"></span>
+                            <span th:text="${topic.replyCount}"></span>
                         </span>
                         </td>
                     </tr>

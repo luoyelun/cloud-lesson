@@ -1,6 +1,6 @@
 package icu.thyself.cloudlesson.service;
 
-import icu.thyself.cloudlesson.dto.PostDTO;
+import icu.thyself.cloudlesson.dto.IndexTopicDTO;
 
 import java.util.List;
 
@@ -9,13 +9,14 @@ import java.util.List;
  * @date 2020/5/5 21:42
  */
 
-public interface PostService {
+public interface TopicService {
 
     /**
      * pageNum:页数
      * tag:根据标签
      * orderBy:排序字段
      */
-    List<PostDTO> getPostList(int pageNum, String tag, String keyWord, String orderBy);
+    List<IndexTopicDTO> getTopicList(int pageNum, String tag, String keyWord, String orderBy);
+
 
 }

@@ -117,7 +117,7 @@ make %{?_smp_mflags}
 %makeinstall
 find %{buildroot} -type f -name '*.la' -exec rm -f {} ';'
 
-%post -p /sbin/ldconfig
+%topic -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 

@@ -1,10 +1,9 @@
 package icu.thyself.cloudlesson.controller;
 
 import com.alibaba.fastjson.JSON;
-import icu.thyself.cloudlesson.dto.PostDTO;
-import icu.thyself.cloudlesson.service.PostService;
+import icu.thyself.cloudlesson.dto.IndexTopicDTO;
+import icu.thyself.cloudlesson.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +19,15 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    PostService postService;
+    TopicService topicService;
 
     /**
      * 首页
      */
     @GetMapping("/")
     public String index(Model model) {
-        List<PostDTO> postDTOList = postService.getPostList(1, null, null, "create");
-        model.addAttribute("postList", postDTOList);
+        List<IndexTopicDTO> indexTopicDTOList = topicService.getTopicList(1, null, null, "create");
+        model.addAttribute("postList", indexTopicDTOList);
         return "index";
     }
 
@@ -38,7 +37,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/latest/{pageNum}")
     public String getLatestPostList(@PathVariable(name = "pageNum") int pageNum) {
-        return JSON.toJSONString(postService.getPostList(pageNum, null, null, "create"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, null, null, "create"));
     }
 
     /**
@@ -47,7 +46,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/mostreply/{pageNum}")
     public String getMostReplyPostList(@PathVariable(name = "pageNum") int pageNum) {
-        return JSON.toJSONString(postService.getPostList(pageNum, null, null, "most_reply"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, null, null, "most_reply"));
     }
 
     /**
@@ -56,7 +55,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/mostview/{pageNum}")
     public String getMostViewPostList(@PathVariable(name = "pageNum") int pageNum) {
-        return JSON.toJSONString(postService.getPostList(pageNum, null, null, "most_view"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, null, null, "most_view"));
     }
 
     /**
@@ -65,7 +64,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/recent/{pageNum}")
     public String getRecentPostList(@PathVariable(name = "pageNum", required = false) int pageNum) {
-        return JSON.toJSONString(postService.getPostList(pageNum, null, null, "recent"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, null, null, "recent"));
     }
 
     /**
@@ -74,7 +73,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/recent/{tag}/{pageNum}")
     public String getRecentPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
-        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "recent"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, tag, null, "recent"));
     }
 
     /**
@@ -83,7 +82,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/mostview/{tag}/{pageNum}")
     public String getMostViewPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
-        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "most_view"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, tag, null, "most_view"));
     }
 
     /**
@@ -92,7 +91,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/mostreply/{tag}/{pageNum}")
     public String getMostReplyPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
-        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "most_reply"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, tag, null, "most_reply"));
     }
 
     /**
@@ -101,7 +100,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/latest/{tag}/{pageNum}")
     public String getLatestPostListByTag(@PathVariable(name = "pageNum") int pageNum, @PathVariable(name = "tag") String tag) {
-        return JSON.toJSONString(postService.getPostList(pageNum, tag, null, "create"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, tag, null, "create"));
     }
 
 

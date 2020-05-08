@@ -3,6 +3,7 @@ package icu.thyself.cloudlesson.service;
 import icu.thyself.cloudlesson.mapper.MailCheckMapper;
 import icu.thyself.cloudlesson.model.MailCheck;
 import icu.thyself.cloudlesson.model.MailCheckExample;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -24,7 +25,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public String getCaptcha() {
-        String captcha = UUID.randomUUID().toString();
+        String captcha = RandomStringUtils.randomAlphanumeric(10);
         MailCheck mailCheck = new MailCheck();
         mailCheck.setCaptcha(captcha);
         mailCheckMapper.insert(mailCheck);

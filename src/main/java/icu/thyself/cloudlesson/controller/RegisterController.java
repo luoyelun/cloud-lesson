@@ -28,6 +28,12 @@ public class RegisterController {
     @ResponseBody
     @GetMapping("/register/sendMail")
     public ResultDTO sendMail(@RequestParam("mail") String mail) {
+        Account account = new Account();
+        account.setUsername(mail);
+        if (accountService.isExists(account)) {
+            return new ResultDTO(201, "该邮箱已注册");
+        }
+
         String captcha = mailService.getCaptcha();
         try {
             mailService.sendMail(captcha, mail);
@@ -50,7 +56,7 @@ public class RegisterController {
             return new ResultDTO(201, "验证码错误");
         }
         //注册信息是否为空
-        if (StringUtils.isEmpty(accountDTO.getUsername()) || StringUtils.isEmpty(accountDTO.getPassword()) || StringUtils.isEmpty(accountDTO.getName()) || StringUtils.isEmpty(accountDTO.getQq()) || StringUtils.isEmpty(accountDTO.getWechat())) {
+        if (StringUtils.isEmpty(accountDTO.getUsername()) || StringUtils.isEmpty(accountDTO.getPassword()) || StringUtils.isEmpty(accountDTO.getName())) {
             return new ResultDTO(InformationEnumImpl.REGISTER_INFO_EMPTY_OR_SPACE.getCode(),
                     InformationEnumImpl.REGISTER_INFO_EMPTY_OR_SPACE.getMessage());
         }

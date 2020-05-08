@@ -24,8 +24,8 @@ function registera() {
             }),
             success: function (response) {
                 if (response.code === 200) {
-                    $("#login-message").html("注册成功");
-                    // $("#message").html("注册成功");
+                    $("#login-message").html(response.message);
+                    $("#message").html(response.message);
                 } else {
                     $("#message").html(response.message);
                 }
@@ -85,7 +85,7 @@ function sendMail() {
             if (response.code === 200) {
                 $("#message").html("已发送");
             } else {
-                $("#message").html("发送失败");
+                $("#message").html(response.message);
             }
         },
         dataType: "json"

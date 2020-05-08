@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--    <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />-->
+    <context id="mysql" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/cloud_lesson?characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;tinyInt1isBit=false"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--实体类-->
+        <javaModelGenerator targetPackage="icu.thyself.cloudlesson.model" targetProject="src/main/java">
+            <!--是否自动创建文件夹-->
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--xml文件-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!--mapper类-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="icu.thyself.cloudlesson.mapper"
+                             targetProject="src/main/java">
+            <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table tableName="account" domainObjectName="Account"/>
+        <table tableName="attention" domainObjectName="Attention"/>
+        <table tableName="topic" domainObjectName="Topic"/>
+        <table tableName="mail_check" domainObjectName="MailCheck"/>
+        <table tableName="comment" domainObjectName="Comment"/>
+    </context>
+</generatorConfiguration>

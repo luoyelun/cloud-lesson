@@ -2,10 +2,10 @@ package icu.thyself.cloudlesson.service;
 
 import icu.thyself.cloudlesson.dto.ResultDTO;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
-import icu.thyself.cloudlesson.mapper.PostMapper;
+import icu.thyself.cloudlesson.mapper.TopicMapper;
 import icu.thyself.cloudlesson.model.Account;
 import icu.thyself.cloudlesson.model.AccountExample;
-import icu.thyself.cloudlesson.model.Post;
+import icu.thyself.cloudlesson.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,21 +21,21 @@ public class PublishServiceImpl implements PublishService {
     AccountMapper accountMapper;
 
     @Autowired
-    PostMapper postMapper;
+    TopicMapper topicMapper;
 
     @Override
-    public ResultDTO insertPost(Post post, String username) {
+    public ResultDTO insertPost(Topic topic, String username) {
         AccountExample accountExample = new AccountExample();
         accountExample.createCriteria().andUsernameEqualTo(username);
         List<Account> accounts = accountMapper.selectByExample(accountExample);
         Long id = accounts.get(0).getId();
-        post.setAuthor(id);
-        post.setGmtCreate(System.currentTimeMillis());
-        post.setGmtModify(post.getGmtCreate());
-        post.setGmtRecent(post.getGmtCreate());
-        post.setRecentReplyAccountId(id);
+        topic.setAuthor(id);
+        topic.setGmtCreate(System.currentTimeMillis());
+        topic.setGmtModify(topic.getGmtCreate());
+        topic.setGmtRecent(topic.getGmtCreate());
+        topic.setRecentReplyAccountId(id);
         try {
-            postMapper.insertSelective(post);
+            topicMapper.insertSelective(topic);
             return new ResultDTO(200, "发布成功");
         } catch (Exception e) {
             return new ResultDTO(201, "发布失败");

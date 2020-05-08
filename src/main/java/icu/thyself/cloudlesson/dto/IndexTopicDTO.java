@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2020/5/5 21:21
  */
 @Data
-public class PostDTO {
+public class IndexTopicDTO {
     //主题ID
     private Long id;
     //主题标题
