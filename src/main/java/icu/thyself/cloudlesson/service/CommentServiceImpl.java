@@ -75,14 +75,14 @@ public class CommentServiceImpl implements CommentService {
             //创建通知
             //通知主题创建者
             Topic t = topicMapper.selectByPrimaryKey(comment.getTopicId());
-            noticeService.createNotice(comment.getTopicId(), t.getAuthor(), comment.getAccountId());
+            //自己回复自己的主题不创建通知
+            if (!comment.getAccountId().equals(t.getAuthor())) {
+                noticeService.createNotice(comment.getTopicId(), t.getAuthor(), comment.getAccountId());
+            }
             //如果回复指向其他回复，则通知该回复的创建者
-            if (comment.getParentId() != null) {
-                CommentExample commentExample = new CommentExample();
-                //根据子评论指向的父评论找到被通知人的ID
-                commentExample.createCriteria().andIdEqualTo(comment.getParentId());
-                Comment parentComment = commentMapper.selectByExample(commentExample).get(0);
-                noticeService.createNotice(comment.getTopicId(), parentComment.getAccountId(), comment.getAccountId());
+            //自己回复自己的回复不创建通知
+            if (comment.getParentId() != null && !comment.getAccountId().equals(comment.getParentId())) {
+                noticeService.createNotice(comment.getTopicId(), comment.getParentId(), comment.getAccountId());
             }
             return new ResultDTO(200, "回复成功");
         } catch (Exception e) {
