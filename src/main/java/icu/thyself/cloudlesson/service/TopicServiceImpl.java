@@ -3,11 +3,13 @@ package icu.thyself.cloudlesson.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import icu.thyself.cloudlesson.dto.IndexTopicDTO;
+import icu.thyself.cloudlesson.dto.TopicDTO;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
 import icu.thyself.cloudlesson.mapper.TopicMapper;
 import icu.thyself.cloudlesson.model.Account;
 import icu.thyself.cloudlesson.model.Topic;
 import icu.thyself.cloudlesson.model.TopicExample;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,5 +83,31 @@ public class TopicServiceImpl implements TopicService {
             indexTopicDTOList.add(indexTopicDTO);
         }
         return indexTopicDTOList;
+    }
+
+    @Override
+    public TopicDTO getById(Long tid) {
+        Topic topic = topicMapper.selectByPrimaryKey(tid);
+        if (topic == null) {
+            return null;
+        }
+        TopicDTO topicDTO = new TopicDTO();
+        topicDTO.setId(topic.getId());
+        topicDTO.setTitle(topic.getTitle());
+        topicDTO.setContent(topic.getContent());
+        topicDTO.setTags(topic.getTags());
+        if (!StringUtils.isEmpty(topic.getVideoLink())) {
+            topicDTO.setVideoLink(topic.getVideoLink());
+        }
+        Account account = accountMapper.selectByPrimaryKey(topic.getAuthor());
+        topicDTO.setAuthorId(account.getId());
+        topicDTO.setAuthorAvatar(account.getHeader());
+        topicDTO.setAuthorName(account.getName());
+        topicDTO.setCreateDate(DateFormatUtils.format(topic.getGmtCreate(), "yyyy/MM/dd HH:mm"));
+        if (!topic.getGmtCreate().equals(topic.getGmtModify())) {
+            topicDTO.setCreateDate(DateFormatUtils.format(topic.getGmtModify(), "yyyy/MM/dd HH:mm"));
+        }
+
+        return topicDTO;
     }
 }

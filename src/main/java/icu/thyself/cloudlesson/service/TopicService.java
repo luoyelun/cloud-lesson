@@ -1,6 +1,7 @@
 package icu.thyself.cloudlesson.service;
 
 import icu.thyself.cloudlesson.dto.IndexTopicDTO;
+import icu.thyself.cloudlesson.dto.TopicDTO;
 
 import java.util.List;
 
@@ -18,5 +19,9 @@ public interface TopicService {
      */
     List<IndexTopicDTO> getTopicList(int pageNum, String tag, String keyWord, String orderBy);
 
+    /**
+     * 通过ID查找主题
+     */
+    TopicDTO getById(Long tid);
 
 }

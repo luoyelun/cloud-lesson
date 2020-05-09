@@ -14,4 +14,5 @@ public interface AccountService {
     ResultDTO register(Account account);
 
 
+    Account selectAccountByUsername(String username);
 }

@@ -62,4 +62,12 @@ public class AccountServiceImpl implements AccountService {
                     InformationEnumImpl.REGISTER_ERROR.getMessage());
         }
     }
+
+    @Override
+    public Account selectAccountByUsername(String username) {
+        AccountExample accountExample = new AccountExample();
+        accountExample.createCriteria().andUsernameEqualTo(username);
+        List<Account> accounts = accountMapper.selectByExample(accountExample);
+        return accounts.get(0);
+    }
 }

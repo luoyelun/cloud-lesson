@@ -47,13 +47,17 @@
             </li>
             <li sec:authorize="isAuthenticated()">
                 <a href="#">
-                    <img width="50px;" src="http://q9p1v1fsb.bkt.clouddn.com/wallhaven-2el1wx.jpg" alt="">
-                    <span class="uk-text-emphasis" sec:authentication="principal.name"></span>
+                    <img width="50px;" th:src="${session.account.header}" alt="">
+                    <span class="uk-text-emphasis" th:text="${session.account.name}"></span>
+                    <span class="uk-badge" th:text="${session.noticeCount}"></span>
                     <span uk-icon="thumbnails"></span>
                 </a>
                 <div class="uk-navbar-dropdown">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
                         <li><a href="#" class="uk-link-text">个人信息</a></li>
+                        <li><a href="#" class="uk-link-text">我的通知
+                            <span class="uk-badge" th:text="${session.noticeCount}"></span>
+                        </a></li>
                         <li><a href="#" class="uk-link-text">我的关注</a></li>
                         <li><a th:href="@{/logout}" class="uk-link-text">退出</a></li>
                     </ul>

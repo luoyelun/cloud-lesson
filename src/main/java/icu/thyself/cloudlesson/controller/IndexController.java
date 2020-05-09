@@ -2,6 +2,9 @@ package icu.thyself.cloudlesson.controller;
 
 import com.alibaba.fastjson.JSON;
 import icu.thyself.cloudlesson.dto.IndexTopicDTO;
+import icu.thyself.cloudlesson.model.Account;
+import icu.thyself.cloudlesson.service.AccountService;
+import icu.thyself.cloudlesson.service.NoticeService;
 import icu.thyself.cloudlesson.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -20,13 +25,23 @@ import java.util.List;
 public class IndexController {
     @Autowired
     TopicService topicService;
+    @Autowired
+    NoticeService noticeService;
+    @Autowired
+    AccountService accountService;
 
     /**
      * 首页
      */
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request, Principal principal) {
         List<IndexTopicDTO> indexTopicDTOList = topicService.getTopicList(1, null, null, "create");
+        if (principal != null) {
+            String username = principal.getName();
+            Account account = accountService.selectAccountByUsername(username);
+            request.getSession().setAttribute("noticeCount", noticeService.getNoticeCount(account.getId()));
+            request.getSession().setAttribute("account", account);
+        }
         model.addAttribute("postList", indexTopicDTOList);
         return "index";
     }

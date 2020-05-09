@@ -39,5 +39,6 @@
         <table tableName="topic" domainObjectName="Topic"/>
         <table tableName="mail_check" domainObjectName="MailCheck"/>
         <table tableName="comment" domainObjectName="Comment"/>
+        <table tableName="notice" domainObjectName="Notice"/>
     </context>
 </generatorConfiguration>

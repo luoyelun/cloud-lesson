@@ -1,5 +1,6 @@
 function mostReply() {
     let option = $("#option").text("最多回复");
+    $("#more").text("查看更多");
     $("#pagenum").val(1);
     $("div[name='topic']").remove()
     more();
@@ -7,6 +8,7 @@ function mostReply() {
 
 function recent() {
     $("#option").text("最近回复");
+    $("#more").text("查看更多");
     $("#pagenum").val(1);
     $("div[name='topic']").remove()
     more();
@@ -14,6 +16,7 @@ function recent() {
 
 function newest() {
     $("#option").text("最新主题");
+    $("#more").text("查看更多");
     $("#pagenum").val(1);
     $("div[name='topic']").remove()
     more();
@@ -21,6 +24,7 @@ function newest() {
 
 function mostView() {
     $("#option").text("最多点击");
+    $("#more").text("查看更多");
     $("#pagenum").val(1);
     $("div[name='topic']").remove()
     more();
@@ -28,6 +32,7 @@ function mostView() {
 
 function tag(e) {
     let tag = e.getAttribute("data-tag")
+    $("#more").text("查看更多");
     $("#tag").val(tag);
     $("#pagenum").val(1);
     $(document).attr("title", tag);
@@ -36,6 +41,9 @@ function tag(e) {
 }
 
 function more() {
+    if ($("#more").text() === "已经没有更多了") {
+        return;
+    }
     let option = $("#option").text();
     let link = "/yunke/index/";
     if (option === "最新主题") {
@@ -73,7 +81,7 @@ function more() {
                 "                        </td>\n" +
                 "                        <td width=\"10\"></td>\n" +
                 "                        <td width=\"auth\" valign=\"middle\">\n" +
-                "                            <a href=\"/t/" + topic.id + "\" class=\"uk-link-heading\" target=\"_blank\"><span\n" +
+                "                            <a href=\"/yunke/t/" + topic.id + "\" class=\"uk-link-heading\" target=\"_blank\"><span\n" +
                 "                             >" + topic.title + "</span>\n" +
                 "                            </a>\n" +
                 "                            <div height=\"5px\"></div>\n" +

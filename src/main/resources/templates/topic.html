@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${topic.title}">云课</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/topic.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+    <!--markdown-->
+    <link rel="stylesheet" th:href="@{/css/editormd.preview.min.css}">
+    <script th:src="@{/js/editormd.min.js}"></script>
+    <script th:src="@{/js/lib/marked.min.js}"></script>
+    <script th:src="@{/js/lib/prettify.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/editormd.min.css}">
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-align-center topic-title">
+    <div class="uk-article-title" th:text="${topic.title}"></div>
+    <div class="topic-tags uk-article-meta">
+        <span>
+            <img src="http://q9p1v1fsb.bkt.clouddn.com/tags.png" alt="" width="17">
+        </span>
+        <span th:text="${topic.tags}">
+        </span><input type="text" id="topic-id" th:value="${topic.id}" hidden>
+    </div>
+</div>
+<div class="uk-flex uk-flex-center" style="width: 100%">
+    <div class="topic-left uk-margin-small-top">
+        <article class="uk-article uk-padding-small">
+            <a class="uk-link-reset" th:href="'/yunke/u/'+${topic.authorId}">
+                <img th:src="${topic.authorAvatar}" width="70">
+                <span class="uk-text-emphasis" th:text="${topic.authorName}"></span>
+            </a>
+            <span class="uk-text-small" th:text="${'发布于'+topic.createDate}"></span>
+            <span class="uk-text-small" th:if="${topic.modifyDate!=null}" th:text="${'最后修改于'+topic.modifyDate}"></span>
+            <hr>
+            <div th:if="${topic.videoLink!=null}">
+                <video th:src="${topic.videoLink}" width="640" height="460" controls="controls"></video>
+                <hr>
+            </div>
+            <div id="topic-content">
+                <label>
+                    <textarea style="display:none;" th:text="${topic.content}">
+
+                    </textarea>
+                </label>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    editormd.markdownToHTML("topic-content", {});
+                });
+            </script>
+        </article>
+        <hr>
+
+        <div class="topic-comment-box" th:each="comment:${comments}">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td width="60" valign="top" align="center"><img th:src="${comment.accountAvatar}" alt=""></td>
+                    <td width="10" valign="top"></td>
+                    <td>
+                        <div class="uk-align-right">
+                            <a class="uk-link-muted" href="#comment-main" th:data-id="${comment.accountId}"
+                               th:data-name="${comment.accountName}" onclick="reply(this)">
+                                <span uk-icon="reply"></span>
+                            </a>
+                        </div>
+                        <a class="uk-link-muted uk-text-normal" th:href="@{'/u/'+${comment.accountId}}"
+                           th:text="${comment.accountName}"></a>
+                        <span class="uk-text-meta" th:text="${comment.replyDate}"></span>
+                        <div>
+                            <p>
+                                    <span th:if="${comment.atAccountName!=null}">
+                                        <a th:href="@{'/u/'+${comment.atAccountId}}"
+                                           th:text="${'@'+comment.atAccountName}">
+
+                                        </a>
+                                    </span>
+                                <span th:text="${comment.content}"></span>
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="comment-main" class="uk-margin" sec:authorize="isAuthenticated()">
+            <textarea id="comment-content" class="uk-textarea" rows="5" placeholder="Textarea"></textarea>
+            <button class="uk-button uk-button-primary uk-align-right" onclick="replySubmit()">回复</button>
+        </div>
+        <div class="uk-margin" sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}">登录后即可回复</a>
+        </div>
+    </div>
+
+    <div class="topic-right uk-margin-small-top" sec:authorize="isAuthenticated()">
+        <div>
+            <a href="#comment-main" class="uk-button uk-button-primary uk-text-bold uk-border-rounded">回复</a>
+        </div>
+        <div class="uk-margin-small-top">
+            <button class="uk-button uk-button-primary uk-text-bold uk-border-rounded">关注</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .authorizeRequests()
                 //不做限制的请求
-                .antMatchers("/", "/index/**", "/register", "/register/**", "/test").permitAll()
+                .antMatchers("/", "/index/**", "/register", "/register/**", "/t/*").permitAll()
                 .and()
                 //登录不限制
                 .formLogin().loginPage("/login").loginProcessingUrl("/login/form").failureUrl("/loginerror")

@@ -61,3 +61,41 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.topic-title {
+    text-align: center;
+    height: 100px;
+    color: #667c99;;
+    background-color: #e8ecf3;
+    padding-top: 30px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.topic-tags {
+    margin-left: 100px;
+}
+
+.topic-left {
+    width: 60%;
+}
+
+.topic-right {
+    width: 15%;
+    position: fixed;
+    top: 30%;
+    left: 85%;
+}
+
+.topic-comment-reply {
+    width: 200px;
+    height: 1em;
+}
+
+.topic-comment-box {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: left;
+    border-bottom: 1px solid #e2e2e2;
+}
