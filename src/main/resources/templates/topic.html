@@ -94,7 +94,7 @@
             </table>
         </div>
         <div id="comment-main" class="uk-margin" sec:authorize="isAuthenticated()">
-            <textarea id="comment-content" class="uk-textarea" rows="5" placeholder="Textarea"></textarea>
+            <textarea id="comment-content" class="uk-textarea" rows="5" placeholder="输入回复内容..."></textarea>
             <button class="uk-button uk-button-primary uk-align-right" onclick="replySubmit()">回复</button>
         </div>
         <div class="uk-margin" sec:authorize="!isAuthenticated()">
