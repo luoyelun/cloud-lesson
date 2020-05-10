@@ -95,7 +95,9 @@
         </div>
         <div id="comment-main" class="uk-margin" sec:authorize="isAuthenticated()">
             <textarea id="comment-content" class="uk-textarea" rows="5" placeholder="输入回复内容..."></textarea>
-            <button class="uk-button uk-button-primary uk-align-right" onclick="replySubmit()">回复</button>
+            <button class="uk-button uk-button-primary uk-align-right topic-right-button" onclick="replySubmit()">
+                回复
+            </button>
         </div>
         <div class="uk-margin" sec:authorize="!isAuthenticated()">
             <a th:href="@{/login}">登录后即可回复</a>
@@ -104,10 +106,20 @@
 
     <div class="topic-right uk-margin-small-top" sec:authorize="isAuthenticated()">
         <div>
-            <a href="#comment-main" class="uk-button uk-button-primary uk-text-bold uk-border-rounded">回复</a>
+            <a href="#comment-main"
+               class="uk-button uk-button-primary uk-text-bold uk-border-rounded topic-right-button">回复</a>
         </div>
         <div class="uk-margin-small-top">
-            <button class="uk-button uk-button-primary uk-text-bold uk-border-rounded">关注</button>
+            <button th:id="attention" th:if="${!isAttention}"
+                    class=" uk-button uk-button-primary uk-text-bold uk-border-rounded topic-right-button"
+                    onclick="attention(this)" th:data-topic-id="${topic.id}" data-type="0" title="点击关注">
+                关注
+            </button>
+            <button th:id="attention" th:if="${isAttention}"
+                    class="uk-button uk-button-primary uk-text-bold uk-border-rounded topic-right-button"
+                    onclick="attention(this)" th:data-topic-id="${topic.id}" data-type="1" title="点击取消关注">
+                已关注
+            </button>
         </div>
     </div>
 </div>
