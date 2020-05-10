@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索：[[${keyword}]]</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/search.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<div th:replace="~{navigation::nav}"></div>
+<div class="search-main">
+    <div class="search-content uk-align-center uk-margin-medium-top">
+        <div id="ps-list">
+            <th:block th:if="${topicList.size()>0}">
+                <input id="pagenum" type="text" th:value="${topicList.get(0).presentPageNum+1}" hidden>
+                <div name="topic" th:each="topic:${topicList}" class="index-p uk-margin-top">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tbody>
+                        <tr>
+                            <td width="60" valign="top" align="center">
+                                <a th:href="@{'/u/'+${topic.authorId}}">
+                                    <img width="60" height="60" th:src="${topic.authorAvatar}" alt=""></a>
+                            </td>
+                            <td width="10"></td>
+                            <td width="auth" valign="middle">
+                                <a th:href="@{'/t/'+${topic.id}}" class="uk-link-heading"> <span
+                                        th:text="${topic.title}"></span>
+                                </a>
+                                <div height="5px"></div>
+                                <span class="index-topic-title-span uk-text-small uk-text-muted uk-align-right"
+                                      style="margin-bottom: 0">
+                            <img src="http://q9p1v1fsb.bkt.clouddn.com/tags.png" alt=""
+                                 width="15">
+                            <span th:text="${topic.tags}"></span>
+                        </span>
+                                <span class="uk-text-small uk-text-muted">
+                            <span th:text="${topic.info}"></span>
+                            <img src="http://q9p1v1fsb.bkt.clouddn.com/view.png" alt="" width="15">
+                            <span th:text="${topic.viewCount}"></span>
+                            <img src="http://q9p1v1fsb.bkt.clouddn.com/connent.png" alt="" width="15">
+                            <span th:text="${topic.replyCount}"></span>
+                        </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </th:block>
+            <th:block th:if="${topicList.size()==0}">
+                没有找到[[${keyword}]]相关主题
+            </th:block>
+        </div>
+        <th:block th:if="${topicList.size()>0}">
+            <button th:if="${topicList.get(0).presentPageNum<topicList.get(0).pageMaxNum}" th:id="more"
+                    class="uk-button uk-button-default uk-align-center" th:data-keyword="${keyword}"
+                    th:data-pagenum="${topicList.get(0).presentPageNum+1}" onclick="search(this)">查看更多
+            </button>
+            <button th:if="${topicList.get(0).presentPageNum==topicList.get(0).pageMaxNum}" th:id="more"
+                    class="uk-button uk-button-default uk-align-center" disabled>已经没有更多了
+            </button>
+        </th:block>
+
+    </div>
+</div>
+</body>
+</html>

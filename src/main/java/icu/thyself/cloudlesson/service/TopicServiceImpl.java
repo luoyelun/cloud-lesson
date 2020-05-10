@@ -55,9 +55,9 @@ public class TopicServiceImpl implements TopicService {
             topicExample.setOrderByClause("view_count desc");
         }
         //获得相应条数的主题，与分页信息
-        PageInfo<Topic> posts = new PageInfo<>(topicMapper.selectByExample(topicExample));
+        PageInfo<Topic> topics = new PageInfo<>(topicMapper.selectByExample(topicExample));
         List<IndexTopicDTO> indexTopicDTOList = new ArrayList<>();
-        for (Topic topic : posts.getList()) {
+        for (Topic topic : topics.getList()) {
             IndexTopicDTO indexTopicDTO = new IndexTopicDTO();
             Account account = accountMapper.selectByPrimaryKey(topic.getAuthor());
             indexTopicDTO.setId(topic.getId());
@@ -68,8 +68,8 @@ public class TopicServiceImpl implements TopicService {
             indexTopicDTO.setTags(topic.getTags());
             indexTopicDTO.setReplyCount(topic.getReplyCount());
             indexTopicDTO.setViewCount(topic.getViewCount());
-            indexTopicDTO.setPageMaxNum(posts.getPages());
-            indexTopicDTO.setPresentPageNum(posts.getPageNum());
+            indexTopicDTO.setPageMaxNum(topics.getPages());
+            indexTopicDTO.setPresentPageNum(topics.getPageNum());
             //如果创建时间与回复时间相等
             if (topic.getGmtCreate().equals(topic.getGmtRecent())) {
                 indexTopicDTO.setInfo(indexTopicDTO.getAuthorName() + "发布于" + DateFormatUtils.format(topic.getGmtCreate(), "yyyy/MM/dd HH:mm"));
@@ -110,4 +110,5 @@ public class TopicServiceImpl implements TopicService {
 
         return topicDTO;
     }
+
 }

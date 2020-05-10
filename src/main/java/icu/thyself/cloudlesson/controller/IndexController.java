@@ -42,9 +42,10 @@ public class IndexController {
             request.getSession().setAttribute("noticeCount", noticeService.getNoticeCount(account.getId()));
             request.getSession().setAttribute("account", account);
         }
-        model.addAttribute("postList", indexTopicDTOList);
+        model.addAttribute("topicList", indexTopicDTOList);
         return "index";
     }
+
 
     /**
      * 最新主题

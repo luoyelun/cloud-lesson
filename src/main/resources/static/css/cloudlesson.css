@@ -103,3 +103,11 @@
 .topic-right-button {
     width: 120px;
 }
+
+.search-main {
+    width: 100%;
+}
+
+.search-content {
+    width: 60%;
+}

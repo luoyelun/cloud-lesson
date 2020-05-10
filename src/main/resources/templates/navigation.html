@@ -30,9 +30,10 @@
 
             <li>
                 <div class="uk-navbar-item">
-                    <form>
-                        <input class="uk-input uk-form-width-small uk-form-width-medium" type="text">
-                        <button class="uk-button uk-button-default">搜索</button>
+                    <form th:action="@{/search}" method="get">
+                        <input class="uk-input uk-form-width-small uk-form-width-medium" name="keyword" type="text"
+                               th:value="${keyword}">
+                        <button class="uk-button uk-button-default" type="submit">搜索</button>
                     </form>
                 </div>
             </li>
