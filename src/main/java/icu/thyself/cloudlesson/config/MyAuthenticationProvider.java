@@ -22,11 +22,12 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private MyUserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+//    @Autowired
+//    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //获取表单输入中返回的用户名
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();

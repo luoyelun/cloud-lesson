@@ -22,11 +22,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MyAuthenticationProvider myAuthenticationProvider;
     @Autowired
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
-    @Autowired
-    private MyAuthenticationFailHander myAuthenticationFailHander;
+    //    @Autowired
+//    private MyAuthenticationFailHander myAuthenticationFailHander;
     @Qualifier("myUserDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    MyLogoutSuccessHandler myLogoutSuccessHandler;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //登录不限制
                 .formLogin().loginPage("/login").loginProcessingUrl("/login/form").failureUrl("/loginerror")
-//                .successHandler(myAuthenticationSuccessHandler)
+                .successHandler(myAuthenticationSuccessHandler)
 //                .failureHandler(myAuthenticationFailHander)
                 .permitAll()
                 .and()
@@ -54,7 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().rememberMeParameter("rememberMe").userDetailsService(userDetailsService);
         //没有权限，跳转请求
         http.formLogin().loginPage("/login");
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/");
+        //登出处理
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(myLogoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
+
     }
 
     @Override
@@ -74,10 +87,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/icon/**",
                 "/fonts/**",
                 "/favicon.ico");
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

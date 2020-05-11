@@ -40,7 +40,6 @@ public class IndexController {
             String username = principal.getName();
             Account account = accountService.selectAccountByUsername(username);
             request.getSession().setAttribute("noticeCount", noticeService.getNoticeCount(account.getId()));
-            request.getSession().setAttribute("account", account);
         }
         model.addAttribute("topicList", indexTopicDTOList);
         return "index";
