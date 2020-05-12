@@ -80,7 +80,8 @@
                 sec:authorize="hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">开始上传
         </button>
         <span id="ossfile" style="display: none"></span>
-        <button class="uk-button uk-button-primary uk-align-right" onclick="modify(this)" th:data-topic-id="${topic.id}">
+        <button class="uk-button uk-button-primary uk-align-right" onclick="modify(this)"
+                th:data-topic-id="${topic.id}">
             修改
         </button>
         <a th:href="@{'/t/'+${topic.id}}" class="uk-button uk-button-primary uk-align-right">取消</a>
@@ -98,7 +99,7 @@
             placeholder: "撰写内容...支持markdown",
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: "/community/file/upload",
+            imageUploadURL: "/yunke/file/upload",
         });
     });
 </script>

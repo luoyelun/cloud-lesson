@@ -1,22 +1,29 @@
 package icu.thyself.cloudlesson.controller;
 
+import com.qiniu.storage.model.DefaultPutRet;
 import icu.thyself.cloudlesson.dto.CommentDTO;
+import icu.thyself.cloudlesson.dto.FileDTO;
 import icu.thyself.cloudlesson.dto.ResultDTO;
 import icu.thyself.cloudlesson.dto.TopicDTO;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
 import icu.thyself.cloudlesson.mapper.TopicExtMapper;
 import icu.thyself.cloudlesson.model.Account;
 import icu.thyself.cloudlesson.model.Topic;
+import icu.thyself.cloudlesson.provider.QiNiuProvider;
 import icu.thyself.cloudlesson.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author luoyelun
@@ -36,6 +43,8 @@ public class TopicController {
     AccountService accountService;
     @Autowired
     AttentionService attentionService;
+    @Autowired
+    QiNiuProvider qiNiuProvider;
 
     @GetMapping("/t/{tid}")
     public String topic(@PathVariable(name = "tid") Long tid, Model model, Principal principal) {
@@ -101,4 +110,21 @@ public class TopicController {
         }
         return "redirect:/";
     }
+
+    @ResponseBody
+    @RequestMapping("/file/upload")
+    public FileDTO upload(HttpServletRequest request) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("editormd-image-file");
+        FileDTO fileDTO = new FileDTO();
+        try {
+            DefaultPutRet upload = qiNiuProvider.upload(Objects.requireNonNull(file).getInputStream(), file.getOriginalFilename(), file.getContentType());
+            fileDTO.setSuccess(1);
+            fileDTO.setUrl("http://q9p1v1fsb.bkt.clouddn.com/" + upload.key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileDTO;
+    }
+
 }
