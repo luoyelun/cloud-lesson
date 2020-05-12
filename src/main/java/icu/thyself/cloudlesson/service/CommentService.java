@@ -16,4 +16,6 @@ public interface CommentService {
     List<CommentDTO> getCommentsByTopicId(Long tid);
 
     ResultDTO createComment(Comment comment);
+
+    List<CommentDTO> getCommentsByAccountId(Long aid, int pageNum);
 }

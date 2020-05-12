@@ -1,16 +1,18 @@
 package icu.thyself.cloudlesson.controller;
 
 import icu.thyself.cloudlesson.dto.CommentDTO;
+import icu.thyself.cloudlesson.dto.ResultDTO;
 import icu.thyself.cloudlesson.dto.TopicDTO;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
 import icu.thyself.cloudlesson.mapper.TopicExtMapper;
 import icu.thyself.cloudlesson.model.Account;
+import icu.thyself.cloudlesson.model.Topic;
 import icu.thyself.cloudlesson.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -47,11 +49,56 @@ public class TopicController {
         //回复列表
         List<CommentDTO> comments = commentService.getCommentsByTopicId(tid);
         model.addAttribute("comments", comments);
-        //传递是否关注该主题
+        //传递是否关注该主题 与是否可以修改该主题
         if (principal != null) {
             Account account = accountService.selectAccountByUsername(principal.getName());
             model.addAttribute("isAttention", attentionService.isAttention(account.getId(), tid));
+            //admin用户和主题创建者可以修改主题
+            if (StringUtils.contains(account.getRole(), "ADMIN") || account.getId().equals(topicDTO.getAuthorId())) {
+                model.addAttribute("canModify", true);
+            }
         }
         return "topic";
+    }
+
+    @GetMapping("/publish/modify/{tid}")
+    public String toModifyTopic(@PathVariable("tid") Long tid, Model model, HttpServletRequest request, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+        Account account = accountService.selectAccountByUsername(principal.getName());
+        TopicDTO topicDTO = topicService.getById(tid);
+        //admin用户和主题创建者可以修改主题
+        if (StringUtils.contains(account.getRole(), "ADMIN") || account.getId().equals(topicDTO.getAuthorId())) {
+            model.addAttribute("topic", topicDTO);
+            return "modify_topic";
+        }
+        return "redirect:/";
+    }
+
+    @ResponseBody
+    @PostMapping("/publish/modify")
+    public ResultDTO modifyTopic(@RequestBody Topic topic) {
+        if (topic == null || topic.getId() == null) {
+            return new ResultDTO(201, "修改失败，请刷新页面重试");
+        }
+        if (topicService.modifyTopic(topic)) {
+            return new ResultDTO(200, "修改成功");
+        } else {
+            return new ResultDTO(201, "修改失败，请刷新页面重试");
+        }
+    }
+
+    @GetMapping("/publish/delete/{tid}")
+    public String deleteTopic(@PathVariable("tid") Long tid, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+        TopicDTO topic = topicService.getById(tid);
+        Account account = accountService.selectAccountByUsername(principal.getName());
+        if (StringUtils.contains(account.getRole(), "ADMIN") || topic.getAuthorId().equals(account.getId())) {
+            topicService.deleteTopic(tid);
+        }
+        return "redirect:/";
     }
 }

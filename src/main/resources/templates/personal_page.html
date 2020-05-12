@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${account.name}">Title</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/avatar-upload.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<div th:replace="~{navigation::nav}"></div>
+<div class="personal-page-user">
+    <div class="personal-page-user-content uk-align-center">
+        <img th:if="${account.id==session.account.id}" th:src="${account.header}" width="100" title="更换新头像"
+             uk-toggle="target: #upload-avatar" type="button">
+        <div th:if="${account.id==session.account.id}" id="upload-avatar" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <form th:action="@{/u/avatarupload}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="fileName" id="filename" accept="image/png, image/jpeg, image/jpg">
+                    <input type="button" id="submitBtn" onclick="avatarUpload()" value="上传"/>
+                </form>
+            </div>
+        </div>
+        <img class=" uk-border-rounded" th:if="${account.id!=session.account.id}" th:src="${account.header}" width="100"
+             alt="">
+        <span class="uk-margin-right" th:text="${account.name}"></span>
+        <span class="uk-margin-right" th:text="${'QQ：'+account.qq}"></span>
+        <span class="uk-margin-right" th:text="${'微信：'+account.wechat}"></span>
+        <span th:if="${account.id==session.account.id}">
+                    <button class="uk-button uk-button-link" type="button"
+                            uk-toggle="target: #modal-example">修改我的信息
+        </button>
+        <div id="modal-example" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <div class="uk-margin">
+                    <label>密码：
+                        <input class="uk-input" type="password" id="password" placeholder="密码">
+                    </label>
+                </div>
+                <div class="uk-margin">
+                    <label>昵称：
+                        <input class="uk-input" type="text" id="name" th:value="${account.name}" placeholder="昵称">
+                    </label>
+                </div>
+                <div class="uk-margin">
+                    <label>QQ：
+                        <input class="uk-input" type="text" id="qq" th:value="${account.qq}" placeholder="QQ">
+                    </label>
+                </div>
+                <div class="uk-margin">
+                    <label>微信：
+                        <input class="uk-input" type="text" id="wechat" th:value="${account.wechat}" placeholder="微信">
+                    </label>
+                </div>
+
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">取消</button>
+                    <button class="uk-button uk-button-primary" type="button"
+                            th:data-account-id="${account.id}" onclick="saveinfo()">保存</button>
+                </p>
+            </div>
+        </div>
+        </span>
+    </div>
+</div>
+<div class="uk-margin-medium-top personal-page">
+    <div class="personal-page-main uk-align-center">
+        <div uk-grid>
+            <div class="uk-width-small@m">
+                <ul class="uk-nav uk-nav-default nav-font-size"
+                    uk-switcher="connect: #component-nav; animation: uk-animation-fade">
+                    <li th:if="${account.id==session.account.id}"><a>通知</a></li>
+                    <li><a>回复</a></li>
+                    <li><a>主题</a></li>
+                    <li><a>关注</a></li>
+                </ul>
+            </div>
+            <div class="uk-width-expand@m">
+                <ul id="component-nav" class="uk-switcher">
+                    <li th:if="${account.id==session.account.id}">
+                        <dl class="uk-description-list uk-description-list-divider">
+                            <th:block th:if="${notices.size()>0}" th:each="notice:${notices}">
+                                <dt>有人在
+                                    <a class="uk-link-muted"
+                                       th:href="@{'/t/'+${notice.topicId}+'/n/'+${notice.noticeId}}"
+                                       th:text="${notice.title}"></a>回复了你 <span th:if="${notice.status}"
+                                                                                class="uk-badge">未读</span>
+                                </dt>
+                            </th:block>
+
+                        </dl>
+                    </li>
+                    <li>
+                        <dl class="uk-description-list uk-description-list-divider">
+                            <th:block th:if="${comments.size()>0}" th:each="comment:${comments}">
+                                <dt>
+                                    <a class="uk-link-muted" th:href="@{'/t/'+${comment.topicId}}"
+                                       th:text="${comment.topicTitle}"></a>
+                                </dt>
+                                <dd th:text="${comment.content}"></dd>
+                            </th:block>
+
+                        </dl>
+                    </li>
+                    <li>
+                        <dl class="uk-description-list uk-description-list-divider">
+                            <th:block th:if="${topics.size()>0}" th:each="topic:${topics}">
+                                <dt>
+                                    <a class="uk-link-muted" th:href="@{'/t/'+${topic.id}}"
+                                       th:text="${topic.title}"></a>
+                                </dt>
+                            </th:block>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl class="uk-description-list uk-description-list-divider">
+                            <th:block th:if="${attentions.size()>0}" th:each="attention:${attentions}">
+                                <dt>
+                                    <a class="uk-link-muted" th:href="@{'/t/'+${attention.topicId}}"
+                                       th:text="${attention.topicTitle}"></a>
+                                </dt>
+                            </th:block>
+                        </dl>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

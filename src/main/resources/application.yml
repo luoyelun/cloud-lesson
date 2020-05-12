@@ -27,14 +27,14 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true #打开驼峰转换
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: cu.thyself.cloudlesson.model
   mapper-locations: classpath:mapper/*.xml
 pagehelper:
   helper-dialect: mysql #数据库方言
   reasonable: true #分页合理化
   support-methods-arguments: true #是否支持接口参数来传递分页参数，默认false
-  page-size-zero: false #当设置为true的时候，如果pagesize设置为0（或RowBounds的limit=0），就不执行分页，返回全部结果
+  page-size-zero: true #当设置为true的时候，如果pagesize设置为0（或RowBounds的limit=0），就不执行分页，返回全部结果
 server:
   servlet:
     context-path: /yunke

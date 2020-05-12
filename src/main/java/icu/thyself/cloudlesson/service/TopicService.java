@@ -2,7 +2,9 @@ package icu.thyself.cloudlesson.service;
 
 import icu.thyself.cloudlesson.dto.IndexTopicDTO;
 import icu.thyself.cloudlesson.dto.TopicDTO;
+import icu.thyself.cloudlesson.model.Topic;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ public interface TopicService {
      * keyword:查询关键字
      * orderBy:排序字段
      */
-    List<IndexTopicDTO> getTopicList(int pageNum, String tag, String keyword, String orderBy);
+    List<IndexTopicDTO> getTopicList(int pageNum, int pageSize, String tag, String keyword, String orderBy);
 
     /**
      * 通过ID查找主题
@@ -26,7 +28,12 @@ public interface TopicService {
     TopicDTO getById(Long tid);
 
     /**
-     * 查询主题 模糊查询
+     * 修改主题
      */
-//    List<IndexTopicDTO> search(Integer pageNum, String keyword);
+    boolean modifyTopic(Topic topic);
+
+
+    boolean deleteTopic(Long tid);
+
+    List<IndexTopicDTO> getMyTopicList(Long accountId);
 }

@@ -1,5 +1,7 @@
 package icu.thyself.cloudlesson.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import icu.thyself.cloudlesson.dto.CommentDTO;
 import icu.thyself.cloudlesson.dto.ResultDTO;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
@@ -11,6 +13,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +89,31 @@ public class CommentServiceImpl implements CommentService {
             }
             return new ResultDTO(200, "回复成功");
         } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ResultDTO(201, "回复失败");
         }
+    }
+
+    @Override
+    public List<CommentDTO> getCommentsByAccountId(Long aid, int pageNum) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.setOrderByClause("gmt_create desc");
+        commentExample.createCriteria()
+                .andAccountIdEqualTo(aid);
+//        PageHelper.startPage(pageNum, 15);
+//        PageInfo<Comment> comments = new PageInfo<>(commentMapper.selectByExample(commentExample));
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for (Comment c : comments) {
+            Topic topic = topicMapper.selectByPrimaryKey(c.getTopicId());
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setTopicId(topic.getId());
+            commentDTO.setTopicTitle(topic.getTitle());
+            commentDTO.setContent(c.getContent());
+//            commentDTO.setPresentPageNum(comments.getPageNum());
+//            commentDTO.setPageMaxNum(comments.getPages());
+            commentDTOList.add(commentDTO);
+        }
+        return commentDTOList;
     }
 }

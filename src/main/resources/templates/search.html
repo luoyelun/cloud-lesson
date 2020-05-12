@@ -14,8 +14,8 @@
 </head>
 <body>
 <div th:replace="~{navigation::nav}"></div>
-<div class="search-main">
-    <div class="search-content uk-align-center uk-margin-medium-top">
+<div class="search-main uk-margin-medium-top">
+    <div class="search-content uk-align-center">
         <div id="ps-list">
             <th:block th:if="${topicList.size()>0}">
                 <input id="pagenum" type="text" th:value="${topicList.get(0).presentPageNum+1}" hidden>

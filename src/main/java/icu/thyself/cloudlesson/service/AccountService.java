@@ -13,6 +13,11 @@ public interface AccountService {
 
     ResultDTO register(Account account);
 
-
     Account selectAccountByUsername(String username);
+
+    Account selectAccountById(Long id);
+
+    int updateAccountAvatar(Long accountId, String link);
+
+    int updateAccountInfo(Account account);
 }

@@ -69,7 +69,7 @@
     </form>
     <div class="uk-margin" id="container">
         <button class="uk-button uk-button-default" id="selectfiles" href="javascript:void(0);"
-                sec:authorize="hasRole('ROLE_AUTHOR')">选择视频上传
+                sec:authorize="hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">选择视频上传
         </button>
         <button class="uk-button uk-button-default" id="postfiles" href="javascript:void(0);" style="display: none"
                 sec:authorize="hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">开始上传

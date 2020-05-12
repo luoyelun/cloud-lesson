@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/publish").hasAnyRole("USER", "AUTHOR", "ADMIN")
+                .antMatchers("/u/**").hasAnyRole("USER", "AUTHOR", "ADMIN")
                 .anyRequest().authenticated();
         http.rememberMe().rememberMeParameter("rememberMe").userDetailsService(userDetailsService);
         //没有权限，跳转请求

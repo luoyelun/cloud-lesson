@@ -1,11 +1,6 @@
 package icu.thyself.cloudlesson.dto;
 
-import icu.thyself.cloudlesson.model.Comment;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
 
 /**
  * @author luoyelun
@@ -13,6 +8,10 @@ import java.util.List;
  */
 @Data
 public class CommentDTO {
+    //主题id
+    private Long topicId;
+    //主题标题
+    private String topicTitle;
     //回复用户ID
     private Long accountId;
     //回复用户昵称
@@ -27,4 +26,8 @@ public class CommentDTO {
     private String atAccountName;
     //回复时间
     private String replyDate;
+    //当前
+    private Integer presentPageNum;
+    //最大页数
+    private Integer pageMaxNum;
 }

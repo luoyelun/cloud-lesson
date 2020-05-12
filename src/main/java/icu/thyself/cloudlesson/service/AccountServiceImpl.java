@@ -1,16 +1,15 @@
 package icu.thyself.cloudlesson.service;
 
 import icu.thyself.cloudlesson.dto.ResultDTO;
-import icu.thyself.cloudlesson.enums.InformationEnum;
 import icu.thyself.cloudlesson.enums.InformationEnumImpl;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
 import icu.thyself.cloudlesson.model.Account;
 import icu.thyself.cloudlesson.model.AccountExample;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     /**
      * 用户注册
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultDTO register(Account account) {
         //如果已存在这个用户
@@ -58,6 +57,7 @@ public class AccountServiceImpl implements AccountService {
             return new ResultDTO(InformationEnumImpl.REGISTER_SUCCESS.getCode(),
                     InformationEnumImpl.REGISTER_SUCCESS.getMessage());
         } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ResultDTO(InformationEnumImpl.REGISTER_ERROR.getCode(),
                     InformationEnumImpl.REGISTER_ERROR.getMessage());
         }
@@ -69,5 +69,23 @@ public class AccountServiceImpl implements AccountService {
         accountExample.createCriteria().andUsernameEqualTo(username);
         List<Account> accounts = accountMapper.selectByExample(accountExample);
         return accounts.get(0);
+    }
+
+    @Override
+    public Account selectAccountById(Long id) {
+        return accountMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateAccountAvatar(Long accountId, String link) {
+        Account account = new Account();
+        account.setId(accountId);
+        account.setHeader(link);
+        return accountMapper.updateByPrimaryKeySelective(account);
+    }
+
+    @Override
+    public int updateAccountInfo(Account account) {
+        return accountMapper.updateByPrimaryKeySelective(account);
     }
 }

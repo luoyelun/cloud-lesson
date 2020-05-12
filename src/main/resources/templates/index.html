@@ -118,12 +118,12 @@
                         <tbody>
                         <tr>
                             <td width="60" valign="top" align="center">
-                                <a th:href="@{'/u/'+${topic.authorId}}">
+                                <a th:href="@{'/u/'+${topic.authorId}}" target="_blank">
                                     <img width="60" height="60" th:src="${topic.authorAvatar}" alt=""></a>
                             </td>
                             <td width="10"></td>
                             <td width="auth" valign="middle">
-                                <a th:href="@{'/t/'+${topic.id}}" class="uk-link-heading"> <span
+                                <a th:href="@{'/t/'+${topic.id}}" class="uk-link-heading" target="_blank"> <span
                                         th:text="${topic.title}"></span>
                                 </a>
                                 <div height="5px"></div>

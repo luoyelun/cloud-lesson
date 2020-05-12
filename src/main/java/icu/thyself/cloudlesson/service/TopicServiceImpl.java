@@ -4,15 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import icu.thyself.cloudlesson.dto.IndexTopicDTO;
 import icu.thyself.cloudlesson.dto.TopicDTO;
-import icu.thyself.cloudlesson.mapper.AccountMapper;
-import icu.thyself.cloudlesson.mapper.TopicMapper;
-import icu.thyself.cloudlesson.model.Account;
-import icu.thyself.cloudlesson.model.Topic;
-import icu.thyself.cloudlesson.model.TopicExample;
+import icu.thyself.cloudlesson.mapper.*;
+import icu.thyself.cloudlesson.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +26,16 @@ public class TopicServiceImpl implements TopicService {
     AccountMapper accountMapper;
     @Autowired
     TopicMapper topicMapper;
-
+    @Autowired
+    CommentMapper commentMapper;
+    @Autowired
+    AttentionMapper attentionMapper;
+    @Autowired
+    NoticeMapper noticeMapper;
 
     @Override
-    public List<IndexTopicDTO> getTopicList(int pageNum, String tag, String keyWord, String orderBy) {
-        PageHelper.startPage(pageNum, 10);
+    public List<IndexTopicDTO> getTopicList(int pageNum, int pageSize, String tag, String keyWord, String orderBy) {
+        PageHelper.startPage(pageNum, pageSize);
         TopicExample topicExample = new TopicExample();
         //是否通过标签查询
         if (tag != null) {
@@ -105,10 +109,53 @@ public class TopicServiceImpl implements TopicService {
         topicDTO.setAuthorName(account.getName());
         topicDTO.setCreateDate(DateFormatUtils.format(topic.getGmtCreate(), "yyyy/MM/dd HH:mm"));
         if (!topic.getGmtCreate().equals(topic.getGmtModify())) {
-            topicDTO.setCreateDate(DateFormatUtils.format(topic.getGmtModify(), "yyyy/MM/dd HH:mm"));
+            topicDTO.setModifyDate(DateFormatUtils.format(topic.getGmtModify(), "yyyy/MM/dd HH:mm"));
         }
 
         return topicDTO;
     }
 
+    @Override
+    public boolean modifyTopic(Topic topic) {
+        topic.setGmtModify(System.currentTimeMillis());
+        return topicMapper.updateByPrimaryKeySelective(topic) > 0;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean deleteTopic(Long tid) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andTopicIdEqualTo(tid);
+        AttentionExample attentionExample = new AttentionExample();
+        attentionExample.createCriteria().andTopicIdEqualTo(tid);
+        NoticeExample noticeExample = new NoticeExample();
+        noticeExample.createCriteria().andTopicIdEqualTo(tid);
+        try {
+            topicMapper.deleteByPrimaryKey(tid);
+            commentMapper.deleteByExample(commentExample);
+            attentionMapper.deleteByExample(attentionExample);
+            noticeMapper.deleteByExample(noticeExample);
+            return true;
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public List<IndexTopicDTO> getMyTopicList(Long accountId) {
+        TopicExample topicExample = new TopicExample();
+        topicExample.setOrderByClause("gmt_create desc");
+        topicExample.createCriteria()
+                .andAuthorEqualTo(accountId);
+        List<Topic> topics = topicMapper.selectByExample(topicExample);
+        List<IndexTopicDTO> topicDTOList = new ArrayList<>();
+        for (Topic topic : topics) {
+            IndexTopicDTO indexTopicDTO = new IndexTopicDTO();
+            indexTopicDTO.setId(topic.getId());
+            indexTopicDTO.setTitle(topic.getTitle());
+            topicDTOList.add(indexTopicDTO);
+        }
+        return topicDTOList;
+    }
 }

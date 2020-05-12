@@ -29,7 +29,7 @@ public class SearchController {
         if (StringUtils.isEmpty(keyword)) {
             return "redirect:/";
         }
-        List<IndexTopicDTO> topicList = topicService.getTopicList(pageNum, null, keyword, "create");
+        List<IndexTopicDTO> topicList = topicService.getTopicList(pageNum, 10, null, keyword, "create");
         model.addAttribute("topicList", topicList);
         model.addAttribute("keyword", keyword);
         return "search";
@@ -39,6 +39,6 @@ public class SearchController {
     @GetMapping("/search/bypagenum")
     public String search(@RequestParam(value = "pageNum") Integer pageNum,
                          @RequestParam(name = "keyword") String keyword) {
-        return JSON.toJSONString(topicService.getTopicList(pageNum, null, keyword, "create"));
+        return JSON.toJSONString(topicService.getTopicList(pageNum, 10, null, keyword, "create"));
     }
 }
