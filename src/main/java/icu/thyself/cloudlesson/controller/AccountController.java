@@ -52,14 +52,6 @@ public class AccountController {
         model.addAttribute("notices", notices);
         List<AttentionDTO> attentions = attentionService.getAttentions(aid);
         model.addAttribute("attentions", attentions);
-//        if ("notice".equals(action)) {
-//            model.addAttribute("notice", "notice");
-//        } else if ("attention".equals(action)) {
-//            model.addAttribute("attention", "attention");
-//        } else {
-//            model.addAttribute("info", "info");
-//        }
-
         return "personal_page";
     }
 
@@ -81,22 +73,14 @@ public class AccountController {
         }
     }
 
-    //    @RequestParam(value = "password", required = false) String password,
-//    @RequestParam(value = "name", required = false) String name,
-//    @RequestParam(value = "qq", required = false) String qq,
-//    @RequestParam(value = "wechat", required = false) String wechat,
     @ResponseBody
     @PostMapping("/u/modifyAccountInfo")
     public ResultDTO modifyAccountInfo(@RequestBody Account account, HttpServletRequest request) {
-//        Account account = new Account();
         if (!StringUtils.isEmpty(account.getPassword())) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             account.setPassword(passwordEncoder.encode(account.getPassword()));
         }
         account.setId(((Account) request.getSession().getAttribute("account")).getId());
-//        account.setName(name);
-//        account.setQq(qq);
-//        account.setWechat(wechat);
         int i = accountService.updateAccountInfo(account);
         if (i > 0) {
             request.getSession().setAttribute("account", accountService.selectAccountById(account.getId()));
