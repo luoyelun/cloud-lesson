@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>云课管理</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/recommend.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-flex uk-flex-center uk-margin-large-top">
+    <div th:replace="~{admin_left::admin-left}"></div>
+    <div class="index-main-right">
+        <div>
+            <button class="uk-button uk-button-default" uk-toggle="target: #add-tj">添加 <span
+                    uk-icon="icon: plus; ratio: 0.7"></span></button>
+            <div id="add-tj" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <div uk-form-custom>
+                        <img alt="" id="fm-image" src="" style="height: 200px;width: 200px;">
+                        <input accept="image/png, image/jpeg, image/jpg" id="filename" name="fileName"
+                               onchange="fmImageUpload()" type="file">
+                        <button class="uk-button uk-button-default" tabindex="-1" type="button">选择封面图</button>
+                    </div>
+                    <div>
+                        <div class="uk-margin">
+                            标题：
+                            <input class="uk-input" id="title" type="text">
+                        </div>
+                        <div class="uk-margin">
+                            描述：
+                            <input class="uk-input" id="desc" type="text">
+                        </div>
+                        <div class="uk-margin">
+                            主题链接：
+                            <input class="uk-input" id="topic-link" type="text">
+                        </div>
+                    </div>
+                    <div class="uk-margin-top">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">取消</button>
+                        <button class="uk-button uk-button-primary" onclick="addRecommend()" type="button">保存</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin-medium-top">
+            <ul class="uk-list uk-list-striped">
+                <li th:each="recommend:${recommends}" th:id="'li-recommend-'+${recommend.id}">
+                    <a target="_blank" th:href="${recommend.topicLink}" th:text="${recommend.title}"></a>
+                    <button class="uk-button uk-button-default uk-button-small uk-align-right uk-margin-remove-bottom uk-margin-remove-left"
+                            onclick="getRecommend(this)"
+                            th:data-cid="${recommend.id}" uk-toggle="target: #modify-recommend">修改
+                    </button>
+                    <button class="uk-button uk-button-default uk-button-small uk-align-right uk-margin-remove-bottom uk-margin-remove-left"
+                            onclick="deleteRecommend(this)" th:data-cid="${recommend.id}">删除
+                    </button>
+                </li>
+                <div id="modify-recommend" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <div uk-form-custom>
+                            <img alt="" id="modify-fm-image" src="" style="height: 200px;width: 200px;">
+                            <input accept="image/png, image/jpeg, image/jpg" id="modify-fm-img" name="image-name"
+                                   onchange="modifyFmImageUpload()" type="file">
+                            <button class="uk-button uk-button-default" tabindex="-1" type="button">选择封面图</button>
+                        </div>
+                        <div>
+                            <div class="uk-margin">
+                                标题：
+                                <input class="uk-input" id="modify-title" type="text">
+                            </div>
+                            <div class="uk-margin">
+                                描述：
+                                <input class="uk-input" id="modify-desc" type="text">
+                            </div>
+                            <div class="uk-margin">
+                                主题链接：
+                                <input class="uk-input" id="modify-topic-link" type="text">
+                            </div>
+                        </div>
+                        <div class="uk-margin-top">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">取消</button>
+                            <button class="uk-button uk-button-primary" id="modify-btn" onclick="modifyRecommend(this)"
+                                    type="button">修改
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

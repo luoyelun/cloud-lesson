@@ -16,7 +16,8 @@
 <div th:replace="~{navigation::nav}"></div>
 <div class="personal-page-user">
     <div class="personal-page-user-content uk-align-center">
-        <img th:if="${account.id==session.account.id}" th:src="${account.header}" width="100" title="更换新头像"
+        <img class="uk-border-rounded img-limit" th:if="${account.id==session.account.id}" th:src="${account.header}"
+             title="更换新头像"
              uk-toggle="target: #upload-avatar" type="button">
         <div th:if="${account.id==session.account.id}" id="upload-avatar" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
@@ -26,7 +27,7 @@
                 </form>
             </div>
         </div>
-        <img class=" uk-border-rounded" th:if="${account.id!=session.account.id}" th:src="${account.header}" width="100"
+        <img class="uk-border-rounded img-limit" th:if="${account.id!=session.account.id}" th:src="${account.header}"
              alt="">
         <span class="uk-margin-right" th:text="${account.name}"></span>
         <span class="uk-margin-right" th:text="${'QQ：'+account.qq}"></span>

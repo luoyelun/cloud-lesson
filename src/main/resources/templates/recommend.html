@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>课程推荐</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-margin-medium-top">
+    <div class="recommend-content uk-align-center">
+        <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
+            <div th:each="recommend:${recommends}">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div>
+                        <a th:href="${recommend.topicLink}">
+                            <img alt="" style="height: 100px;width: 200px;" th:src="${recommend.imgLink}">
+                        </a>
+                    </div>
+                    <a th:href="${recommend.topicLink}">
+                        <div class="uk-text-lead uk-margin-top" th:text="${recommend.title}"></div>
+                    </a>
+                    <div class="uk-text-meta" th:text="${recommend.description}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -119,7 +119,8 @@
                         <tr>
                             <td width="60" valign="top" align="center">
                                 <a th:href="@{'/u/'+${topic.authorId}}" target="_blank">
-                                    <img width="60" height="60" th:src="${topic.authorAvatar}" alt=""></a>
+                                    <img alt="" class="uk-border-rounded"
+                                         style="width: 70px;height: 70px" th:src="${topic.authorAvatar}"></a>
                             </td>
                             <td width="10"></td>
                             <td width="auth" valign="middle">

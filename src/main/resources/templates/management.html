@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/index.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<div th:replace="~{navigation::nav}"></div>
+<!-- MOBI Nav -->
+<div class="uk-sticky"
+     uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent;">
+    <nav class="uk-navbar uk-navbar-container uk-margin uk-hidden@m uk-navbar-transparent">
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="http://www.getuikit.net/doc/v3/examples/example7.html#">LOGO</a>
+        </div>
+        <div class="uk-navbar-right">
+            <a class="uk-navbar-toggle uk-icon uk-navbar-toggle-icon"
+               href="http://www.getuikit.net/doc/v3/examples/example7.html#m-nav"
+               uk-navbar-toggle-icon="" uk-toggle="">
+                <svg data-svg="navbar-toggle-icon"
+                     height="20" viewBox="0 0 20 20" width="20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <rect height="2" width="20" y="9"></rect>
+                    <rect height="2" width="20" y="3"></rect>
+                    <rect height="2" width="20" y="15"></rect>
+                </svg>
+            </a>
+        </div>
+    </nav>
+</div>
+<div class="uk-sticky-placeholder" hidden="" style="height: 0px; margin: 0px;"></div>
+
+<!-- sidebar -->
+<div class="uk-background-primary uk-light uk-visible@s sidebar">
+    <h3><a class="uk-navbar-item uk-logo" href="http://www.getuikit.net/doc/v3/examples/example7.html"><img
+            class="uk-margin-small-right" hidden="true" src="./示例模板-管理后台_files/uikit-logo.svg" uk-svg="">
+        <svg
+                class="uk-margin-small-right uk-svg" data-svg="/skin/ukv3/images/uikit-logo.svg" height="34"
+                viewBox="0 0 28 34"
+                width="28" xmlns="http://www.w3.org/2000/svg">
+            <polygon fill="#fff" points="19.1,4.1 13.75,1 8.17,4.45 13.6,7.44 "></polygon>
+            <path d="M21.67,5.43l-5.53,3.34l6.26,3.63v9.52l-8.44,4.76L5.6,21.93v-7.38L0,11.7v13.51l13.75,8.08L28,25.21V9.07 L21.67,5.43z"
+                  fill="#fff">
+            </path>
+        </svg>
+        UIkit</a></h3>
+    <ul class="uk-nav-default uk-nav-parent-icon uk-nav" uk-nav="">
+        <li class="uk-nav-header"><span class="uk-margin-small-right uk-icon" uk-icon="icon: home"><svg data-svg="home"
+                                                                                                        height="20"
+                                                                                                        viewBox="0 0 20 20"
+                                                                                                        width="20"
+                                                                                                        xmlns="http://www.w3.org/2000/svg">
+						<polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65"></polygon>
+						<polygon points="15 4 18 4 18 7 17 7 17 5 15 5"></polygon>
+						<polygon
+                                points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19">
+						</polygon>
+					</svg></span> HOME
+        </li>
+        <li class="uk-nav-header"><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">快捷菜单</a></li>
+        <li class="uk-parent uk-open">
+            <a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                    class="uk-margin-small-right uk-icon" uk-icon="icon: cog"><svg data-svg="cog" height="20"
+                                                                                   viewBox="0 0 20 20"
+                                                                                   width="20"
+                                                                                   xmlns="http://www.w3.org/2000/svg">
+							<circle cx="9.997" cy="10" fill="none" r="3.31" stroke="#000"></circle>
+							<path d="M18.488,12.285 L16.205,16.237 C15.322,15.496 14.185,15.281 13.303,15.791 C12.428,16.289 12.047,17.373 12.246,18.5 L7.735,18.5 C7.938,17.374 7.553,16.299 6.684,15.791 C5.801,15.27 4.655,15.492 3.773,16.237 L1.5,12.285 C2.573,11.871 3.317,10.999 3.317,9.991 C3.305,8.98 2.573,8.121 1.5,7.716 L3.765,3.784 C4.645,4.516 5.794,4.738 6.687,4.232 C7.555,3.722 7.939,2.637 7.735,1.5 L12.263,1.5 C12.072,2.637 12.441,3.71 13.314,4.22 C14.206,4.73 15.343,4.516 16.225,3.794 L18.487,7.714 C17.404,8.117 16.661,8.988 16.67,10.009 C16.672,11.018 17.415,11.88 18.488,12.285 L18.488,12.285 Z"
+                                  fill="none"
+                                  stroke="#000">
+							</path>
+						</svg></span> 系统设置</a>
+            <ul class="uk-nav-sub">
+                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">项目一</a></li>
+                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">项目二</a></li>
+            </ul>
+        </li>
+        <li class="uk-parent">
+            <a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                    class="uk-margin-small-right uk-icon" uk-icon="icon: database"><svg data-svg="database" height="20"
+                                                                                        viewBox="0 0 20 20"
+                                                                                        width="20"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+							<ellipse cx="10" cy="4.64" fill="none" rx="7.5" ry="3.14" stroke="#000"></ellipse>
+							<path d="M17.5,8.11 C17.5,9.85 14.14,11.25 10,11.25 C5.86,11.25 2.5,9.84 2.5,8.11"
+                                  fill="none"
+                                  stroke="#000"></path>
+							<path d="M17.5,11.25 C17.5,12.99 14.14,14.39 10,14.39 C5.86,14.39 2.5,12.98 2.5,11.25"
+                                  fill="none"
+                                  stroke="#000"></path>
+							<path d="M17.49,4.64 L17.5,14.36 C17.5,16.1 14.14,17.5 10,17.5 C5.86,17.5 2.5,16.09 2.5,14.36 L2.5,4.64"
+                                  fill="none"
+                                  stroke="#000">
+							</path>
+						</svg></span> 数据维护</a>
+            <ul class="uk-nav-sub" hidden="">
+                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">项目一</a></li>
+                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">项目一</a></li>
+            </ul>
+        </li>
+        <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                class="uk-margin-small-right uk-icon" uk-icon="icon: file-text"><svg data-svg="file-text" height="20"
+                                                                                     viewBox="0 0 20 20"
+                                                                                     width="20"
+                                                                                     xmlns="http://www.w3.org/2000/svg">
+							<rect fill="none" height="17" stroke="#000" width="13" x="3.5" y="1.5"></rect>
+							<line fill="none" stroke="#000" x1="6" x2="12" y1="12.5" y2="12.5"></line>
+							<line fill="none" stroke="#000" x1="6" x2="14" y1="8.5" y2="8.5"></line>
+							<line fill="none" stroke="#000" x1="6" x2="14" y1="6.5" y2="6.5"></line>
+							<line fill="none" stroke="#000" x1="6" x2="14" y1="10.5" y2="10.5"></line>
+						</svg></span> 内容管理</a></li>
+        <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                class="uk-margin-small-right uk-icon" uk-icon="icon: users"><svg data-svg="users" height="20"
+                                                                                 viewBox="0 0 20 20"
+                                                                                 width="20"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+							<circle cx="7.7" cy="8.6" fill="none" r="3.5" stroke="#000" stroke-width="1.1"></circle>
+							<path d="M1,18.1 C1.7,14.6 4.4,12.1 7.6,12.1 C10.9,12.1 13.7,14.8 14.3,18.3" fill="none"
+                                  stroke="#000"
+                                  stroke-width="1.1"></path>
+							<path d="M11.4,4 C12.8,2.4 15.4,2.8 16.3,4.7 C17.2,6.6 15.7,8.9 13.6,8.9 C16.5,8.9 18.8,11.3 19.2,14.1"
+                                  fill="none" stroke="#000"
+                                  stroke-width="1.1">
+							</path>
+						</svg></span> 会员管理</a></li>
+        <li class="uk-nav-header">功能菜单</li>
+        <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                class="uk-margin-small-right uk-icon" uk-icon="icon: table"><svg data-svg="table" height="20"
+                                                                                 viewBox="0 0 20 20"
+                                                                                 width="20"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+							<rect height="1" width="18" x="1" y="3"></rect>
+							<rect height="1" width="18" x="1" y="7"></rect>
+							<rect height="1" width="18" x="1" y="11"></rect>
+							<rect height="1" width="18" x="1" y="15"></rect>
+						</svg></span> 图表</a></li>
+        <li class="uk-active"><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                class="uk-margin-small-right uk-icon" uk-icon="icon: thumbnails"><svg data-svg="thumbnails" height="20"
+                                                                                      viewBox="0 0 20 20"
+                                                                                      width="20"
+                                                                                      xmlns="http://www.w3.org/2000/svg">
+							<rect fill="none" height="5" stroke="#000" width="5" x="3.5" y="3.5"></rect>
+							<rect fill="none" height="5" stroke="#000" width="5" x="11.5" y="3.5"></rect>
+							<rect fill="none" height="5" stroke="#000" width="5" x="11.5" y="11.5"></rect>
+							<rect fill="none" height="5" stroke="#000" width="5" x="3.5" y="11.5"></rect>
+						</svg></span> Active状态</a></li>
+        <li class="uk-nav-divider"></li>
+        <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                class="uk-margin-small-right uk-icon" uk-icon="icon: trash"><svg data-svg="trash" height="20"
+                                                                                 viewBox="0 0 20 20"
+                                                                                 width="20"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+							<polyline fill="none" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3" stroke="#000"></polyline>
+							<polyline fill="none" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4" stroke="#000"></polyline>
+							<rect height="9" width="1" x="8" y="7"></rect>
+							<rect height="9" width="1" x="11" y="7"></rect>
+							<rect height="1" width="16" x="2" y="3"></rect>
+						</svg></span> 回收站</a></li>
+    </ul>
+    <a class="uk-button uk-button-default uk-width-1-1 uk-margin-top uk-button-small">退出登录</a>
+</div>
+
+<!-- main -->
+<div class="uk-container uk-container-expand uk-background-muted main">
+    <div class="uk-section uk-section-xsmall uk-padding-remove-top">
+        <nav class="uk-navbar-container uk-margin uk-navbar-transparent uk-navbar" uk-navbar="">
+            <div class="uk-navbar-left uk-visible@s">
+                <div class="uk-navbar-item">
+                    <ul class="uk-breadcrumb uk-margin-remove-bottom">
+                        <li><a class="uk-icon" href="http://www.getuikit.net/doc/v3/examples/example7.html"
+                               uk-icon="icon: home">
+                            <svg data-svg="home" height="20" viewBox="0 0 20 20"
+                                 width="20" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65">
+                                </polygon>
+                                <polygon points="15 4 18 4 18 7 17 7 17 5 15 5"></polygon>
+                                <polygon
+                                        points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19">
+                                </polygon>
+                            </svg>
+                        </a></li>
+                        <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">系统设置</a></li>
+                        <li><span>项目一</span></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="uk-navbar-right">
+                <div class="uk-navbar-item">
+                    <form action="javascript:void(0)">
+                        <input class="uk-input uk-form-width-small" placeholder="输入关键字" type="text">
+                        <button class="uk-button uk-button-default">搜索</button>
+                    </form>
+                </div>
+                <div class="uk-navbar-item">
+                    <button aria-expanded="false" class="uk-icon uk-margin-small-right uk-icon-image"
+                            href=""
+                            style="background-image: url(https://keenthemes.com/keen/themes/keen/theme/demo2/dist/assets/media/flags/226-united-states.svg);"></button>
+                    <div class="uk-dropdown" uk-dropdown="">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">中文</a></li>
+                            <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#">English</a></li>
+                        </ul>
+                    </div>
+                    <a class="uk-margin-small-right"
+                       href="http://www.getuikit.net/doc/v3/examples/example7.html"><span class="uk-icon"
+                                                                                          uk-icon="icon: bell; ratio: 1"><svg
+                            data-svg="bell" height="20" viewBox="0 0 20 20" width="20"
+                            xmlns="http://www.w3.org/2000/svg">
+									<path d="M17,15.5 L3,15.5 C2.99,14.61 3.79,13.34 4.1,12.51 C4.58,11.3 4.72,10.35 5.19,7.01 C5.54,4.53 5.89,3.2 7.28,2.16 C8.13,1.56 9.37,1.5 9.81,1.5 L9.96,1.5 C9.96,1.5 11.62,1.41 12.67,2.17 C14.08,3.2 14.42,4.54 14.77,7.02 C15.26,10.35 15.4,11.31 15.87,12.52 C16.2,13.34 17.01,14.61 17,15.5 L17,15.5 Z"
+                                          fill="none" stroke="#000"
+                                          stroke-width="1.1">
+									</path>
+									<path d="M12.39,16 C12.39,17.37 11.35,18.43 9.91,18.43 C8.48,18.43 7.42,17.37 7.42,16"
+                                          fill="none"
+                                          stroke="#000">
+									</path>
+								</svg></span><span class="uk-badge uk-text-top">2</span></a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 图表 -->
+        <div class="uk-child-width-1-1 uk-grid-match uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-first-column">
+
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-body">
+                        <div _echarts_instance_="ec_1589353886449"
+                             id="tb1"
+                             style="width: 100%; height: 450px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                            <div
+                                    style="position: relative; width: 1080px; height: 450px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+                                <canvas data-zr-dom-id="zr_0" height="675"
+                                        style="position: absolute; left: 0px; top: 0px; width: 1080px; height: 450px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"
+                                        width="1620"></canvas>
+                            </div>
+                            <div
+                                    style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 326px; top: 272px; pointer-events: none;">
+                                周二<br><span
+                                    style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#c23531;"></span>邮件营销:
+                                132<br><span
+                                    style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#2f4554;"></span>联盟广告:
+                                182<br><span
+                                    style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#61a0a8;"></span>视频广告:
+                                232<br><span
+                                    style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#d48265;"></span>直接访问:
+                                332<br><span
+                                    style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#91c7ae;"></span>搜索引擎:
+                                932
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            var myChart = echarts.init(document.getElementById('tb1'), 'macarons');
+                            var option = {
+                                title: {
+                                    text: '昨日流量统计'
+                                },
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'cross',
+                                        label: {
+                                            backgroundColor: '#6a7985'
+                                        }
+                                    }
+                                },
+                                legend: {
+                                    data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                                },
+                                toolbox: {
+                                    feature: {
+                                        saveAsImage: {}
+                                    }
+                                },
+                                grid: {
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '邮件营销',
+                                        type: 'line',
+                                        stack: '总量',
+                                        areaStyle: {},
+                                        data: [120, 132, 101, 134, 90, 230, 210]
+                                    },
+                                    {
+                                        name: '联盟广告',
+                                        type: 'line',
+                                        stack: '总量',
+                                        areaStyle: {},
+                                        data: [220, 182, 191, 234, 290, 330, 310]
+                                    },
+                                    {
+                                        name: '视频广告',
+                                        type: 'line',
+                                        stack: '总量',
+                                        areaStyle: {},
+                                        data: [150, 232, 201, 154, 190, 330, 410]
+                                    },
+                                    {
+                                        name: '直接访问',
+                                        type: 'line',
+                                        stack: '总量',
+                                        areaStyle: {},
+                                        data: [320, 332, 301, 334, 390, 330, 320]
+                                    },
+                                    {
+                                        name: '搜索引擎',
+                                        type: 'line',
+                                        stack: '总量',
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                                position: 'top'
+                                            }
+                                        },
+                                        areaStyle: {},
+                                        data: [820, 932, 901, 934, 1290, 1330, 1320]
+                                    }
+                                ]
+                            };
+
+                            // 使用刚指定的配置项和数据显示图表。
+                            myChart.setOption(option);
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="uk-child-width-1-1 uk-child-width-1-3@m uk-grid-match uk-grid" uk-grid="">
+            <div class="uk-first-column">
+                <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-badge">
+                        <button aria-expanded="false"
+                                class="uk-button uk-button-default uk-button-small" type="button">切换 <span
+                                class="uk-margin-small-right uk-icon"
+                                uk-icon="chevron-down"><svg data-svg="chevron-down"
+                                                            height="20"
+                                                            viewBox="0 0 20 20"
+                                                            width="20"
+                                                            xmlns="http://www.w3.org/2000/svg">
+										<polyline fill="none" points="16 7 10 13 4 7" stroke="#000" stroke-width="1.03">
+										</polyline>
+									</svg></span></button>
+                        <div class="uk-dropdown" uk-dropdown="mode: click">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                                        class="uk-margin-small-right uk-icon" uk-icon="icon: image"><svg
+                                        data-svg="image" height="20" viewBox="0 0 20 20"
+                                        width="20" xmlns="http://www.w3.org/2000/svg">
+													<circle cx="16.1" cy="6.1" r="1.1"></circle>
+													<rect fill="none" height="15" stroke="#000" width="19" x=".5"
+                                                          y="2.5"></rect>
+													<polyline fill="none" points="4,13 8,9 13,14" stroke="#000"
+                                                              stroke-width="1.01"></polyline>
+													<polyline fill="none" points="11,12 12.5,10.5 16,14" stroke="#000"
+                                                              stroke-width="1.01"></polyline>
+												</svg></span>昨天</a></li>
+                                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                                        class="uk-margin-small-right uk-icon" uk-icon="icon: settings"><svg
+                                        data-svg="settings" height="20" viewBox="0 0 20 20"
+                                        width="20" xmlns="http://www.w3.org/2000/svg">
+													<ellipse cx="6.11" cy="3.55" fill="none" rx="2.11" ry="2.15"
+                                                             stroke="#000"></ellipse>
+													<ellipse cx="6.11" cy="15.55" fill="none" rx="2.11" ry="2.15"
+                                                             stroke="#000"></ellipse>
+													<circle cx="13.15" cy="9.55" fill="none" r="2.15" stroke="#000">
+													</circle>
+													<rect height="1" width="3" x="1" y="3"></rect>
+													<rect height="1" width="8" x="10" y="3"></rect>
+													<rect height="1" width="8" x="1" y="9"></rect>
+													<rect height="1" width="3" x="15" y="9"></rect>
+													<rect height="1" width="3" x="1" y="15"></rect>
+													<rect height="1" width="8" x="10" y="15"></rect>
+												</svg></span>今天</a></li>
+                                <li><a href="http://www.getuikit.net/doc/v3/examples/example7.html#"><span
+                                        class="uk-margin-small-right uk-icon" uk-icon="icon: trash"><svg
+                                        data-svg="trash" height="20" viewBox="0 0 20 20"
+                                        width="20" xmlns="http://www.w3.org/2000/svg">
+													<polyline fill="none" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3"
+                                                              stroke="#000"></polyline>
+													<polyline fill="none" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4"
+                                                              stroke="#000"></polyline>
+													<rect height="9" width="1" x="8" y="7"></rect>
+													<rect height="9" width="1" x="11" y="7"></rect>
+													<rect height="1" width="16" x="2" y="3"></rect>
+												</svg></span>明天</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">Primary</h3>
+                        <p>Lorem ipsum <a href="http://www.getuikit.net/doc/v3/examples/example7.html#">dolor</a>
+                            sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua.</p>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+
+                <div class="uk-card uk-card-primary uk-card-hover">
+                    <div class="uk-card-badge">Hot</div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">Primary</h3>
+                        <p>Lorem ipsum <a href="http://www.getuikit.net/doc/v3/examples/example7.html#">dolor</a>
+                            sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua.</p>
+                        <p uk-margin="">
+                            <a class="uk-button uk-button-default uk-first-column"
+                               href="http://www.getuikit.net/doc/v3/examples/example7.html#">Button</a>
+                            <a class="uk-button uk-button-text uk-margin-small-left"
+                               href="http://www.getuikit.net/doc/v3/examples/example7.html#">Button</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+
+                <div class="uk-card uk-card-secondary uk-card-hover uk-card-body">
+                    <h3 class="uk-card-title">Secondary</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore etdolore.</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-overflow-auto uk-first-column">
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-header">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">表格组件</h3>
+                    </div>
+                    <div class="uk-card-body">
+                        <div class="uk-overflow-auto">
+                            <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                                <thead>
+                                <tr>
+                                    <th class="uk-table-shrink"></th>
+                                    <th class="uk-table-shrink">Preserve</th>
+                                    <th class="uk-table-expand">Expand + Link</th>
+                                    <th class="uk-width-small">Truncate</th>
+                                    <th class="uk-table-shrink uk-text-nowrap">Shrink + Nowrap</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><input class="uk-checkbox" type="checkbox"></td>
+                                    <td><img alt=""
+                                             class="uk-preserve-width uk-border-circle"
+                                             src="./示例模板-管理后台_files/avatar.jpg" width="40"></td>
+                                    <td class="uk-table-link">
+                                        <a class="uk-link-reset"
+                                           href="http://www.getuikit.net/doc/v3/examples/example7.html">Lorem
+                                            ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor.</a>
+                                    </td>
+                                    <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod
+                                        tempor.
+                                    </td>
+                                    <td class="uk-text-nowrap">Lorem ipsum dolor</td>
+                                </tr>
+                                <tr>
+                                    <td><input class="uk-checkbox" type="checkbox"></td>
+                                    <td><img alt=""
+                                             class="uk-preserve-width uk-border-circle"
+                                             src="./示例模板-管理后台_files/avatar.jpg" width="40"></td>
+                                    <td class="uk-table-link">
+                                        <a class="uk-link-reset"
+                                           href="http://www.getuikit.net/doc/v3/examples/example7.html">Lorem
+                                            ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor.</a>
+                                    </td>
+                                    <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod
+                                        tempor.
+                                    </td>
+                                    <td class="uk-text-nowrap">Lorem ipsum dolor</td>
+                                </tr>
+                                <tr>
+                                    <td><input class="uk-checkbox" type="checkbox"></td>
+                                    <td><img alt=""
+                                             class="uk-preserve-width uk-border-circle"
+                                             src="./示例模板-管理后台_files/avatar.jpg" width="40"></td>
+                                    <td class="uk-table-link">
+                                        <a class="uk-link-reset"
+                                           href="http://www.getuikit.net/doc/v3/examples/example7.html">Lorem
+                                            ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor.</a>
+                                    </td>
+                                    <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod
+                                        tempor.
+                                    </td>
+                                    <td class="uk-text-nowrap">Lorem ipsum dolor</td>
+                                </tr>
+                                <tr>
+                                    <td><input class="uk-checkbox" type="checkbox"></td>
+                                    <td><img alt=""
+                                             class="uk-preserve-width uk-border-circle"
+                                             src="./示例模板-管理后台_files/avatar.jpg" width="40"></td>
+                                    <td class="uk-table-link">
+                                        <a class="uk-link-reset"
+                                           href="http://www.getuikit.net/doc/v3/examples/example7.html">Lorem
+                                            ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor.</a>
+                                    </td>
+                                    <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod
+                                        tempor.
+                                    </td>
+                                    <td class="uk-text-nowrap">Lorem ipsum dolor</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

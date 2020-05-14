@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li><a th:href="@{/}">首页</a></li>
-            <li><a href="#">课程推荐</a></li>
+            <li><a th:href="@{/recommend}">课程推荐</a></li>
         </ul>
     </div>
 
@@ -46,7 +46,8 @@
             </li>
             <li sec:authorize="isAuthenticated()">
                 <a th:href="@{'/u/'+${session.account.id}}">
-                    <img width="50px;" th:src="${session.account.header}" alt="">
+                    <img alt="" class="uk-border-rounded" style="height: 50px;width: 50px"
+                         th:src="${session.account.header}">
                     <span class="uk-text-emphasis" th:text="${session.account.name}"></span>
                     <span class="uk-badge" th:text="${session.noticeCount}"></span>
                     <span uk-icon="thumbnails"></span>

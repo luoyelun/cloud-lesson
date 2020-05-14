@@ -18,6 +18,11 @@
     color: #c9cfd8;
 }
 
+.img-limit {
+    height: 100px;
+    width: 100px;
+}
+
 .index-marin {
     margin-top: 20px;
 }
@@ -133,4 +138,12 @@
 
 .nav-font-size {
     font-size: 16px;
+}
+
+.recommend-main {
+    width: 100%;
+}
+
+.recommend-content {
+    width: 65%;
 }

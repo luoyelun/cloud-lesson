@@ -36,7 +36,7 @@
     <div class="topic-left uk-margin-small-top">
         <article class="uk-article uk-padding-small">
             <a class="uk-link-reset" th:href="'/yunke/u/'+${topic.authorId}">
-                <img th:src="${topic.authorAvatar}" width="70">
+                <img style="width: 70px;height: 70px" th:src="${topic.authorAvatar}">
                 <span class="uk-text-emphasis" th:text="${topic.authorName}"></span>
             </a>
             <span class="uk-text-small" th:text="${'发布于'+topic.createDate}"></span>
@@ -65,7 +65,9 @@
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tbody>
                 <tr>
-                    <td width="60" valign="top" align="center"><img th:src="${comment.accountAvatar}" alt=""></td>
+                    <td align="center" valign="top" width="60"><img alt=""
+                                                                    style="width: 70px;height: 70px"
+                                                                    th:src="${comment.accountAvatar}"></td>
                     <td width="10" valign="top"></td>
                     <td>
                         <div class="uk-align-right">

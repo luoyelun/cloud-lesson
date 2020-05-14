@@ -20,7 +20,7 @@ function avatarUpload() {
                 });
             }
         }
-    })
+    });
 }
 
 function saveinfo() {
@@ -51,5 +51,5 @@ function saveinfo() {
                 });
             }
         }
-    })
+    });
 }
