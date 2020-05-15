@@ -1,16 +1,22 @@
 package icu.thyself.cloudlesson.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import icu.thyself.cloudlesson.dto.AccountManageDTO;
 import icu.thyself.cloudlesson.dto.ResultDTO;
 import icu.thyself.cloudlesson.enums.InformationEnumImpl;
 import icu.thyself.cloudlesson.mapper.AccountMapper;
 import icu.thyself.cloudlesson.model.Account;
 import icu.thyself.cloudlesson.model.AccountExample;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,5 +93,37 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public int updateAccountInfo(Account account) {
         return accountMapper.updateByPrimaryKeySelective(account);
+    }
+
+    @Override
+    public List<AccountManageDTO> selectAccount(int pageNum, String keyword) {
+        PageHelper.startPage(pageNum, 10);
+        AccountExample accountExample = new AccountExample();
+        if (!StringUtils.isEmpty(keyword)) {
+            accountExample.or().andUsernameLike("%" + keyword + "%");
+            accountExample.or().andNameLike("%" + keyword + "%");
+        }
+        PageInfo<Account> accounts = new PageInfo<>(accountMapper.selectByExample(accountExample));
+        List<AccountManageDTO> accountManageDTOS = new ArrayList<>();
+        for (Account a : accounts.getList()) {
+            AccountManageDTO accountManageDTO = new AccountManageDTO();
+            accountManageDTO.setId(a.getId());
+            accountManageDTO.setUsername(a.getUsername());
+            accountManageDTO.setName(a.getName());
+            accountManageDTO.setCreateTime(DateFormatUtils.format(a.getGmtCreate(), "yyyy/MM/dd"));
+            accountManageDTO.setQq(a.getQq());
+            accountManageDTO.setWechat(a.getWechat());
+            if (StringUtils.contains(a.getRole(), "ROLE_ADMIN")) {
+                continue;
+            } else if (StringUtils.contains(a.getRole(), "ROLE_AUTHOR")) {
+                accountManageDTO.setRole("作者");
+            } else {
+                accountManageDTO.setRole("普通用户");
+            }
+            accountManageDTO.setPageNum(accounts.getPageNum());
+            accountManageDTO.setMaxPageNum(accounts.getPages());
+            accountManageDTOS.add(accountManageDTO);
+        }
+        return accountManageDTOS;
     }
 }

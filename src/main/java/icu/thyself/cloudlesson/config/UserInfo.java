@@ -20,6 +20,7 @@ public class UserInfo implements UserDetails {
     private String username;
     private String password;
     private String roles;
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,7 +59,7 @@ public class UserInfo implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
 

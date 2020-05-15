@@ -33,7 +33,7 @@ public class LoginController {
 
     @GetMapping("/loginerror")
     public String logerror(Model model) {
-        model.addAttribute("msg", "登陆失败，请确认账号密码");
+        model.addAttribute("msg", "登陆失败");
         return "login";
     }
 

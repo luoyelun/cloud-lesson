@@ -34,6 +34,7 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
         userInfo.setUsername(accounts.get(0).getUsername());
         userInfo.setPassword(accounts.get(0).getPassword());
         userInfo.setRoles(accounts.get(0).getRole());
+        userInfo.setEnabled(accounts.get(0).getStatus() == 0);
         return userInfo;
     }
 }

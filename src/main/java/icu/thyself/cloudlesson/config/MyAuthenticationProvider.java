@@ -22,9 +22,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private MyUserDetailsServiceImpl userDetailsService;
 
-//    @Autowired
-//    BCryptPasswordEncoder passwordEncoder;
-
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -38,9 +35,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         if (passwordEncoder.matches(password, userInfo.getPassword())) {
             throw new BadCredentialsException("密码不正确");
         }
-//        if (!userInfo.getPassword().equals(password)) {
-//            throw new BadCredentialsException("密码不正确");
-//        }
+        if (!userInfo.isEnabled()) {
+            throw new BadCredentialsException("账号已被禁止登录");
+        }
         Collection<? extends GrantedAuthority> authorities = userInfo.getAuthorities();
         return new UsernamePasswordAuthenticationToken(userInfo, password, authorities);
     }

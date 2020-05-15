@@ -1,7 +1,10 @@
 package icu.thyself.cloudlesson.service;
 
+import icu.thyself.cloudlesson.dto.AccountManageDTO;
 import icu.thyself.cloudlesson.dto.ResultDTO;
 import icu.thyself.cloudlesson.model.Account;
+
+import java.util.List;
 
 /**
  * @author luoyelun
@@ -20,4 +23,13 @@ public interface AccountService {
     int updateAccountAvatar(Long accountId, String link);
 
     int updateAccountInfo(Account account);
+
+    /**
+     * 分页获得用户列表
+     * pageNum:页数
+     * keyword:搜索
+     *
+     * @return
+     */
+    List<AccountManageDTO> selectAccount(int pageNum, String keyword);
 }
