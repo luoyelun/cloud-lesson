@@ -29,8 +29,8 @@
                             </td>
                             <td width="10"></td>
                             <td width="auth" valign="middle">
-                                <a th:href="@{'/t/'+${topic.id}}" class="uk-link-heading"> <span
-                                        th:text="${topic.title}"></span>
+                                <a class="uk-link-heading" target="_blank" th:href="@{'/t/'+${topic.id}}">
+                                    <span th:text="${topic.title}"></span>
                                 </a>
                                 <div height="5px"></div>
                                 <span class="index-topic-title-span uk-text-small uk-text-muted uk-align-right"
@@ -53,7 +53,7 @@
                 </div>
             </th:block>
             <th:block th:if="${topicList.size()==0}">
-                没有找到[[${keyword}]]相关主题
+                没有找到“[[${keyword}]]”相关主题
             </th:block>
         </div>
         <th:block th:if="${topicList.size()>0}">

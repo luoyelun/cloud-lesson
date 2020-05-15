@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
 </head>
 <body>
-<nav class="uk-navbar-container nav-border uk-box-shadow-medium" uk-navbar th:fragment="nav">
+<nav class="uk-navbar-container nav-border uk-box-shadow-medium uk-navbar" th:fragment="nav" uk-navbar>
     <div class="uk-navbar-left uk-margin-large-left">
         <ul class="uk-navbar-nav">
             <li class="uk-active">
@@ -39,7 +39,7 @@
                 <a th:href="@{/login}">登录/注册</a>
             </li>
             <li sec:authorize="hasRole('ROLE_ADMIN')">
-                <a th:href="@{/admin/management}">管理</a>
+                <a th:href="@{/admin/recommendManage}">管理</a>
             </li>
             <li sec:authorize="hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">
                 <a th:href="@{/publish}">发布主题</a>

@@ -31,5 +31,10 @@ public interface AccountService {
      *
      * @return
      */
-    List<AccountManageDTO> selectAccount(int pageNum, String keyword);
+    List<AccountManageDTO> selectAccount(int pageNum, int pageSize, String keyword);
+
+    /**
+     * 修改账户状态、权限
+     */
+    int updateStatusAndRoleByAccountId(Byte status, String role, Long accountId);
 }

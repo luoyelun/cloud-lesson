@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>云课管理-用户管理</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/user-manage.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-flex uk-flex-center uk-margin-medium-top">
+    <div th:replace="~{admin_left::admin-left}"></div>
+    <div class="manage-main-right">
+        <input class="uk-input uk-form-width-small uk-form-width-medium" id="keyword" name="keyword" placeholder="查找用户"
+               type="text">
+        <a class="uk-button uk-button-default" onclick="searchAccount()" type="submit" uk-search-icon></a>
+        <table class="uk-table uk-table-striped uk-table-middle manage-user-table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>用户名</th>
+                <th>昵称</th>
+                <th>注册时间</th>
+                <th>QQ</th>
+                <th>微信</th>
+                <th>用户身份</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="account-list">
+            <tr th:each="account:${accounts}">
+                <th name="accountInfo" th:text="${account.id}"></th>
+                <th name="accountInfo">
+                    <a target="_blank" th:href="@{'/u/'+${account.id}}" th:text="${account.username}"></a>
+                </th>
+                <th name="accountInfo" th:text="${account.name}">昵称</th>
+                <th name="accountInfo" th:text="${account.createTime}">注册时间</th>
+                <th name="accountInfo" th:text="${account.qq}">QQ</th>
+                <th name="accountInfo" th:text="${account.wechat}">微信</th>
+                <th name="accountInfo" th:text="${account.role}">用户身份</th>
+                <th name="accountInfo" th:text="${account.status}">状态</th>
+                <th name="accountInfo" th:data-account-id="${account.id}">
+                    <a href="#account-info" onclick="setAccountInfo(this)" th:data-account-id="${account.id}"
+                       th:data-role="${account.role}"
+                       th:data-status="${account.status}" uk-toggle>操作</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        <div id="account-info" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h5 id="account-info-username"></h5>
+                <p>更改状态：
+                    <label for="account-info-status-t"></label>
+                    <input class="uk-radio" id="account-info-status-t" name="account-info-status" type="radio"
+                           value="0">正常登录
+                    <label for="account-info-status-f"></label>
+                    <input class="uk-radio" id="account-info-status-f" name="account-info-status" type="radio"
+                           value="1">禁止登录
+                </p>
+                <p>更改身份：
+                    <label for="account-info-role-u"></label>
+                    <input class="uk-radio" id="account-info-role-u" name="account-info-role" type="radio" value="0">普通用户
+                    <label for="account-info-role-a"></label>
+                    <input class="uk-radio" id="account-info-role-a" name="account-info-role" type="radio" value="1">作者
+                </p>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">取消</button>
+                    <button class="uk-button uk-button-primary" id="btn-save" onclick="saveAccountInfo(this)"
+                            type="button">保存
+                    </button>
+                </p>
+            </div>
+        </div>
+        <ul class="uk-pagination" id="page-change">
+            <li id="previous"><a onclick="turnPage('previous')"><span uk-pagination-previous></span>上一页</a></li>
+            <li id="page-info" th:data-max-page-num="${accounts.get(0).maxPageNum}"
+                th:data-page-num="${accounts.get(0).pageNum}">
+                第[[${accounts.get(0).pageNum}]]页，共[[${accounts.get(0).maxPageNum}]]页
+            </li>
+            <li id="next"><a onclick="turnPage('next')">下一页<span uk-pagination-next></span></a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

@@ -47,6 +47,14 @@
     padding: 0;
 }
 
+.index-tag {
+    max-width: 10em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+}
+
 .publish-main {
     width: 90%;
 }
@@ -146,4 +154,12 @@
 
 .recommend-content {
     width: 65%;
+}
+
+.manage-main-right {
+    width: 70%;
+}
+
+.manage-user-table th {
+    text-transform: none;
 }

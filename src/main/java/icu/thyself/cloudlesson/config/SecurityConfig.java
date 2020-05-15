@@ -29,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     MyLogoutSuccessHandler myLogoutSuccessHandler;
+    @Autowired
+    MyAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -56,9 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/publish").hasAnyRole("USER", "AUTHOR", "ADMIN")
+                .antMatchers("/publish").hasAnyRole("AUTHOR", "ADMIN")
                 .antMatchers("/u/**").hasAnyRole("USER", "AUTHOR", "ADMIN")
                 .anyRequest().authenticated();
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
         http.rememberMe().rememberMeParameter("rememberMe").userDetailsService(userDetailsService);
         //没有权限，跳转请求
         http.formLogin().loginPage("/login");
@@ -77,6 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

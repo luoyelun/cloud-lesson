@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LogoutController {
     public String logout(HttpServletRequest request) {
+        request.getSession().setAttribute("account", null);
         return "/";
     }
 }

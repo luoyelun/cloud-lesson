@@ -96,8 +96,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountManageDTO> selectAccount(int pageNum, String keyword) {
-        PageHelper.startPage(pageNum, 10);
+    public List<AccountManageDTO> selectAccount(int pageNum, int pageSize, String keyword) {
+        PageHelper.startPage(pageNum, pageSize);
         AccountExample accountExample = new AccountExample();
         if (!StringUtils.isEmpty(keyword)) {
             accountExample.or().andUsernameLike("%" + keyword + "%");
@@ -120,10 +120,24 @@ public class AccountServiceImpl implements AccountService {
             } else {
                 accountManageDTO.setRole("普通用户");
             }
+            if (a.getStatus() == 0) {
+                accountManageDTO.setStatus("正常登录");
+            } else {
+                accountManageDTO.setStatus("禁止登录");
+            }
             accountManageDTO.setPageNum(accounts.getPageNum());
             accountManageDTO.setMaxPageNum(accounts.getPages());
             accountManageDTOS.add(accountManageDTO);
         }
         return accountManageDTOS;
+    }
+
+    @Override
+    public int updateStatusAndRoleByAccountId(Byte status, String role, Long accountId) {
+        Account account = new Account();
+        account.setId(accountId);
+        account.setStatus(status);
+        account.setRole(role);
+        return accountMapper.updateByPrimaryKeySelective(account);
     }
 }

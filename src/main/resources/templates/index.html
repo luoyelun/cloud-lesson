@@ -130,9 +130,10 @@
                                 <div height="5px"></div>
                                 <span class="index-topic-title-span uk-text-small uk-text-muted uk-align-right"
                                       style="margin-bottom: 0">
-                            <img src="http://q9p1v1fsb.bkt.clouddn.com/tags.png" alt=""
-                                 width="15">
-                            <span th:text="${topic.tags}"></span>
+
+                            <span class="index-tag">
+                                <img alt="" src="http://q9p1v1fsb.bkt.clouddn.com/tags.png"
+                                     width="15">[[${topic.tags}]]</span>
                         </span>
                                 <span class="uk-text-small uk-text-muted">
                             <span th:text="${topic.info}"></span>

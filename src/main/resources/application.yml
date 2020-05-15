@@ -15,6 +15,35 @@ spring:
     password: 123456
     url: jdbc:mysql://localhost:3306/cloud_lesson?characterEncoding=UTF-8&serverTimezone=UTC&tinyInt1isBit=false
     driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 连接池配置
+      # 配置初始化大小、最小、最大
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 3000
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall,slf4j
+      # 配置web监控,默认配置也和下面相同(除用户名密码，enabled默认false外)，其他可以不配
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: root
+        allow: 127.0.0.1
   mail:
     username: luoyelun@foxmail.com
     password: eefclsqzqyzjbjfa
@@ -27,7 +56,7 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true #打开驼峰转换
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: cu.thyself.cloudlesson.model
   mapper-locations: classpath:mapper/*.xml
 pagehelper:
