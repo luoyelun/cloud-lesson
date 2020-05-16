@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
             account.setRole("ROLE_USER");
             account.setHeader("http://q9p1v1fsb.bkt.clouddn.com/avatar.png");
             account.setPassword(passwordEncoder.encode(account.getPassword()));
-            accountMapper.insert(account);
+            accountMapper.insertSelective(account);
             return new ResultDTO(InformationEnumImpl.REGISTER_SUCCESS.getCode(),
                     InformationEnumImpl.REGISTER_SUCCESS.getMessage());
         } catch (Exception e) {

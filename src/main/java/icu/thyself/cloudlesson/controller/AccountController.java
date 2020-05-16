@@ -1,12 +1,15 @@
 package icu.thyself.cloudlesson.controller;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.qiniu.storage.model.DefaultPutRet;
 import icu.thyself.cloudlesson.dto.*;
 import icu.thyself.cloudlesson.model.Account;
+import icu.thyself.cloudlesson.model.AuthorApply;
 import icu.thyself.cloudlesson.model.Notice;
 import icu.thyself.cloudlesson.provider.QiNiuProvider;
 import icu.thyself.cloudlesson.service.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -36,6 +40,8 @@ public class AccountController {
     AttentionService attentionService;
     @Autowired
     QiNiuProvider qiNiuProvider;
+    @Autowired
+    AuthorApplyService authorApplyService;
 
     @GetMapping("/u/{aid}")
     public String personInfo(@PathVariable("aid") Long aid, Model model) {
@@ -90,5 +96,27 @@ public class AccountController {
         }
     }
 
-
+    @ResponseBody
+    @PostMapping("/u/authorApply")
+    public ResultDTO authorApply(@Param("reason") String reason, Principal principal) {
+        if (principal == null) {
+            return new ResultDTO(201, "提交申请失败，请重试。");
+        }
+        if (StringUtils.isEmpty(reason)) {
+            return new ResultDTO(201, "请填写申请理由");
+        }
+        Long accountId = accountService.selectAccountByUsername(principal.getName()).getId();
+        if (authorApplyService.isExistApply(accountId)) {
+            return new ResultDTO(201, "已经申请过了");
+        }
+        AuthorApply authorApply = new AuthorApply();
+        authorApply.setAccountId(accountId);
+        authorApply.setApplyReason(reason);
+        authorApply.setGmtCreate(System.currentTimeMillis());
+        int i = authorApplyService.createAuthorApply(authorApply);
+        if (i > 0) {
+            return new ResultDTO(200, "提交成功");
+        }
+        return new ResultDTO(201, "申请失败，请重试。");
+    }
 }

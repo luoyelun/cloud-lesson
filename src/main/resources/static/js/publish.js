@@ -41,7 +41,7 @@ function publish() {
                     setTimeout(function () {
                         window.location.href = "/yunke";
                     }, 1000)
-                })
+                });
             } else {
                 $("#publish-message").html(response.message);
             }

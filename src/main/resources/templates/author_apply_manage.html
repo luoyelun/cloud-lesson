@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>云课管理-作者申请</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <script th:src="@{/js/uikit.js}"></script>
+    <script th:src="@{/js/uikit-icons.js}"></script>
+    <script th:src="@{/js/author-apply.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/uikit.css}">
+    <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
+    <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::nav}"></div>
+<div class="uk-flex uk-flex-center uk-margin-medium-top">
+    <div th:replace="~{admin_left::admin-left}"></div>
+    <div class="manage-main-right">
+        <div>
+            <table class="uk-table uk-table-striped uk-table-middle manage-user-table">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>申请时间</th>
+                    <th>处理状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="apply-list">
+                <tr th:each="apply:${apples}">
+                    <th name="apply-info" th:text="${apply.accountUsername}"></th>
+                    <th name="apply-info" th:text="${apply.createTime}"></th>
+                    <th name="apply-info" th:text="${apply.status}"></th>
+                    <th name="apply-info">
+                        <a href="#apply-info" onclick="setApplyInfo(this)"
+                           th:data-apply-id="${apply.id}"
+                           th:data-apply-reason="${apply.applyReason}"
+                           th:data-apply-username="${apply.accountUsername}" uk-toggle>处理</a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+            <div id="apply-info" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    申请用户：<span id="apply-username"></span>
+                    <br>
+                    申请理由：
+                    <span id="apply-reason"></span>
+                    <p>是否通过申请：
+                        <label for="apply-status-t"></label>
+                        <input checked class="uk-radio" id="apply-status-t" name="apply-status"
+                               type="radio" value="1">允许
+                        <label for="apply-status-t"></label>
+                        <input class="uk-radio" id="apply-status-f" name="apply-status" type="radio"
+                               value="2">拒绝
+                    </p>
+                    <p class="uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">取消</button>
+                        <button class="uk-button uk-button-primary" id="confirm-btn" onclick="process(this)"
+                                type="button">
+                            确认
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <th:block th:if="${apples.size()>0}">
+                <ul class="uk-pagination" id="page-change">
+                    <li id="previous"><a onclick="turnPage('previous')"><span uk-pagination-previous></span>上一页</a></li>
+                    <li id="page-info" th:data-max-page-num="${apples.get(0).maxPageNum}"
+                        th:data-page-num="${apples.get(0).pageNum}">
+                        第[[${apples.get(0).pageNum}]]页，共[[${apples.get(0).maxPageNum}]]页
+                    </li>
+                    <li id="next"><a onclick="turnPage('next')">下一页<span uk-pagination-next></span></a></li>
+                </ul>
+            </th:block>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

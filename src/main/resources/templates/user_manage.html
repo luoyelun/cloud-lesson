@@ -31,7 +31,7 @@
                 <th>微信</th>
                 <th>用户身份</th>
                 <th>状态</th>
-                <th>操作</th>
+                <th></th>
             </tr>
             </thead>
             <tbody id="account-list">
@@ -79,14 +79,16 @@
                 </p>
             </div>
         </div>
-        <ul class="uk-pagination" id="page-change">
-            <li id="previous"><a onclick="turnPage('previous')"><span uk-pagination-previous></span>上一页</a></li>
-            <li id="page-info" th:data-max-page-num="${accounts.get(0).maxPageNum}"
-                th:data-page-num="${accounts.get(0).pageNum}">
-                第[[${accounts.get(0).pageNum}]]页，共[[${accounts.get(0).maxPageNum}]]页
-            </li>
-            <li id="next"><a onclick="turnPage('next')">下一页<span uk-pagination-next></span></a></li>
-        </ul>
+        <th:block th:if="${accounts.size()>0}">
+            <ul class="uk-pagination" id="page-change">
+                <li id="previous"><a onclick="turnPage('previous')"><span uk-pagination-previous></span>上一页</a></li>
+                <li id="page-info" th:data-max-page-num="${accounts.get(0).maxPageNum}"
+                    th:data-page-num="${accounts.get(0).pageNum}">
+                    第[[${accounts.get(0).pageNum}]]页，共[[${accounts.get(0).maxPageNum}]]页
+                </li>
+                <li id="next"><a onclick="turnPage('next')">下一页<span uk-pagination-next></span></a></li>
+            </ul>
+        </th:block>
     </div>
 </div>
 </body>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${account.name}">Title</title>
@@ -8,6 +9,7 @@
     <script th:src="@{/js/uikit.js}"></script>
     <script th:src="@{/js/uikit-icons.js}"></script>
     <script th:src="@{/js/avatar-upload.js}"></script>
+    <script th:src="@{/js/author-apply.js}"></script>
     <link rel="stylesheet" th:href="@{/css/uikit.css}">
     <link rel="stylesheet" th:href="@{/css/uikit-rtl.css}">
     <link rel="stylesheet" th:href="@{/css/cloudlesson.css}">
@@ -33,10 +35,30 @@
         <span class="uk-margin-right" th:text="${'QQ：'+account.qq}"></span>
         <span class="uk-margin-right" th:text="${'微信：'+account.wechat}"></span>
         <span th:if="${account.id==session.account.id}">
-                    <button class="uk-button uk-button-link" type="button"
-                            uk-toggle="target: #modal-example">修改我的信息
-        </button>
-        <div id="modal-example" uk-modal>
+                    <a class="uk-button uk-button-secondary uk-button-small" type="button"
+                       uk-toggle="target: #modify-info">修改我的信息</a>
+            <span sec:authorize="!hasAnyRole('ROLE_AUTHOR,ROLE_ADMIN')">
+                            <a class="uk-button uk-button-secondary uk-button-small"
+                               uk-toggle="target: #author-apply-modal">申请成为作者</a>
+                            <div id="author-apply-modal" uk-modal>
+                                <div class="uk-modal-dialog uk-modal-body">
+                                    <h4>申请成为作者</h4>
+                                    <div class="uk-margin">
+                                        <textarea class="uk-textarea" id="reason" placeholder="申请理由"
+                                                  rows="5"></textarea>
+                                    </div>
+                                    <p class="uk-text-right">
+                                        <button class="uk-button uk-button-default uk-modal-close" type="button">
+                                            取消
+                                        </button>
+                                        <button class="uk-button uk-button-primary" onclick="authorApply()"
+                                                type="button">申请
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </span>
+        <div id="modify-info" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <div class="uk-margin">
                     <label>密码：

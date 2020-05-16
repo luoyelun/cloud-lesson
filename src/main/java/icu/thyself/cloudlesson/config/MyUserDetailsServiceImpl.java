@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,6 +38,8 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
         userInfo.setPassword(accounts.get(0).getPassword());
         userInfo.setRoles(accounts.get(0).getRole());
         userInfo.setEnabled(accounts.get(0).getStatus() == 0);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        request.getSession().setAttribute("account", accounts.get(0));
         return userInfo;
     }
 }

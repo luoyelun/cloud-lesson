@@ -34,12 +34,13 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-                <table tableName="account" domainObjectName="Account"/>
+        <!--                <table tableName="account" domainObjectName="Account"/>-->
         <!--        <table tableName="attention" domainObjectName="Attention"/>-->
         <!--        <table tableName="topic" domainObjectName="Topic"/>-->
         <!--        <table tableName="mail_check" domainObjectName="MailCheck"/>-->
         <!--        <table tableName="comment" domainObjectName="Comment"/>-->
         <!--        <table tableName="notice" domainObjectName="Notice"/>-->
         <!--        <table tableName="recommend" domainObjectName="Recommend"/>-->
+        <!--        <table tableName="author_apply" domainObjectName="AuthorApply"/>-->
     </context>
 </generatorConfiguration>
