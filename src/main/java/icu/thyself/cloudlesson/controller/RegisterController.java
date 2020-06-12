@@ -46,17 +46,17 @@ public class RegisterController {
     @ResponseBody
     @PostMapping("/register")
     public ResultDTO register(@RequestBody AccountDTO accountDTO) {
+        //注册信息是否为空
+        if (StringUtils.isEmpty(accountDTO.getUsername()) || StringUtils.isEmpty(accountDTO.getPassword()) || StringUtils.isEmpty(accountDTO.getName())) {
+            return new ResultDTO(InformationEnumImpl.REGISTER_INFO_EMPTY_OR_SPACE.getCode(),
+                    InformationEnumImpl.REGISTER_INFO_EMPTY_OR_SPACE.getMessage());
+        }
         if (StringUtils.isEmpty(accountDTO.getCaptcha())) {
             return new ResultDTO(201, "验证码不能为空");
         }
         boolean check = mailService.check(accountDTO.getCaptcha());
         if (!check) {
             return new ResultDTO(201, "验证码错误");
-        }
-        //注册信息是否为空
-        if (StringUtils.isEmpty(accountDTO.getUsername()) || StringUtils.isEmpty(accountDTO.getPassword()) || StringUtils.isEmpty(accountDTO.getName())) {
-            return new ResultDTO(InformationEnumImpl.REGISTER_INFO_EMPTY_OR_SPACE.getCode(),
-                    InformationEnumImpl.REGISTER_INFO_EMPTY_OR_SPACE.getMessage());
         }
         String space = " ";
         if (accountDTO.getUsername().contains(space) ||

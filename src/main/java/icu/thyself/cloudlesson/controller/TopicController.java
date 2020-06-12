@@ -50,7 +50,7 @@ public class TopicController {
     public String topic(@PathVariable(name = "tid") Long tid, Model model, Principal principal) {
         TopicDTO topicDTO = topicService.getById(tid);
         if (topicDTO == null) {
-            return "redirect:/";
+            return "/error/4xx";
         }
         //主题信息
         model.addAttribute("topic", topicDTO);
@@ -120,7 +120,7 @@ public class TopicController {
         try {
             DefaultPutRet upload = qiNiuProvider.upload(Objects.requireNonNull(file).getInputStream(), file.getOriginalFilename(), file.getContentType());
             fileDTO.setSuccess(1);
-            fileDTO.setUrl("http://q9p1v1fsb.bkt.clouddn.com/" + upload.key);
+            fileDTO.setUrl("http://qbppo2eal.bkt.clouddn.com/" + upload.key);
         } catch (IOException e) {
             e.printStackTrace();
         }

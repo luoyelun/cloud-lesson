@@ -37,7 +37,7 @@ public class RecommendController {
         }
         try {
             DefaultPutRet upload = qiNiuProvider.upload(file.getInputStream(), file.getOriginalFilename(), file.getContentType());
-            return new ResultDTO(200, "http://q9p1v1fsb.bkt.clouddn.com/" + upload.key);
+            return new ResultDTO(200, "http://qbppo2eal.bkt.clouddn.com/" + upload.key);
         } catch (Exception e) {
             return new ResultDTO(201, "图片上传失败");
         }

@@ -70,7 +70,7 @@ public class AccountController {
         try {
             DefaultPutRet upload = qiNiuProvider.upload(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType());
             Account account = (Account) request.getSession().getAttribute("account");
-            accountService.updateAccountAvatar(account.getId(), "http://q9p1v1fsb.bkt.clouddn.com/" + upload.key);
+            accountService.updateAccountAvatar(account.getId(), "http://qbppo2eal.bkt.clouddn.com/" + upload.key);
             request.getSession().setAttribute("account", accountService.selectAccountById(account.getId()));
             return new ResultDTO(200, "上传完成");
         } catch (Exception e) {

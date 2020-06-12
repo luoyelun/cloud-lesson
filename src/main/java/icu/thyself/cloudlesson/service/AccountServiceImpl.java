@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             account.setGmtCreate(System.currentTimeMillis());
             account.setRole("ROLE_USER");
-            account.setHeader("http://q9p1v1fsb.bkt.clouddn.com/avatar.png");
+            account.setHeader("http://qbppo2eal.bkt.clouddn.com/avatar.png");
             account.setPassword(passwordEncoder.encode(account.getPassword()));
             accountMapper.insertSelective(account);
             return new ResultDTO(InformationEnumImpl.REGISTER_SUCCESS.getCode(),
